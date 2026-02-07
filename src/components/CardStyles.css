@@ -1,0 +1,36 @@
+/* Contenedor general del card */
+.card-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+  padding: 12px;
+}
+
+/* Imagen dentro del card */
+.card-media {
+  object-fit: cover;     /* recorta y centra la imagen */
+  width: 100%;           /* ocupa todo el ancho disponible */
+  max-height: 200px;     /* altura máxima uniforme */
+  border-radius: 8px;    /* esquinas redondeadas */
+  margin-bottom: 10px;   /* espacio debajo de la imagen */
+}
+
+/* Contenido del card */
+.card-content {
+  width: 100%;
+}
+
+/* Acciones (botones) */
+.card-actions {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* Efecto hover para darle dinamismo */
+.card-media:hover {
+  transform: scale(1.05);
+  transition: transform 0.3s ease-in-out;
+}

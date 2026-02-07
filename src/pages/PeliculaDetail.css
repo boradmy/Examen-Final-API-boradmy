@@ -1,0 +1,91 @@
+/* Contenedor similar al de Entrenador (tema claro) */
+.poke-detail-card {
+  max-width: 980px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #ffffff;
+  color: #222;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+}
+
+.poke-name {
+  text-align: center;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.poke-divider {
+  margin: 8px 0 16px;
+  background-color: #cfcfcf;
+}
+
+.poke-main-grid {
+  align-items: flex-start;
+}
+
+/* Columna izquierda: imagen más grande y alineada a la izquierda */
+.poke-left {
+  display: flex;
+  justify-content: flex-start; /* izquierda */
+  align-items: flex-start;
+}
+
+.poke-image-rect {
+  width: 300px;
+  height: 400px;
+  border-radius: 12px;
+  border: 2px solid #e3e3e3;
+  background-color: #f3f3f3;
+  object-fit: cover;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+}
+
+/* ====== AJUSTES DE CENTRADO EN LA COLUMNA DERECHA ====== */
+
+/* 1) El contenedor de los textos ahora centra todo su contenido */
+.poke-info {
+  display: grid;
+  gap: 10px;
+  justify-items: center;     /* centra horizontalmente cada ítem del grid */
+  text-align: center;        /* centra el texto dentro de cada ítem */
+}
+
+/* 2) Cada línea tiene ancho máximo y se centra */
+.poke-info .MuiTypography-root {
+  width: 100%;
+  max-width: 560px;          /* limita el ancho para que no quede de extremo a extremo */
+  margin: 0 auto;
+  text-align: center;        /* refuerzo por si el theme fuerza otro valor */
+}
+
+/* 3) El <strong> no debe “jalar” a la izquierda: tratémoslo como inline-block centrado */
+.poke-info strong {
+  display: inline-block;
+  text-align: center;        /* por si el user agent le da otra alineación */
+  margin-right: 4px;         /* pequeño espacio antes del valor */
+  font-weight: 700;
+}
+
+/* Botón volver centrado */
+.poke-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 22px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .poke-left {
+    margin-bottom: 12px;
+  }
+  .poke-image-rect {
+    width: 220px;
+    height: 300px;
+  }
+
+  /* En móvil mantenemos el centrado y un ancho más contenido para los textos */
+  .poke-info .MuiTypography-root {
+    max-width: 90%;
+  }
+}

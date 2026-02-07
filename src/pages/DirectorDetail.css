@@ -1,0 +1,68 @@
+.detail-card {
+  max-width: 980px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #1e1e1e;
+  color: #f0f0f0;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+}
+
+.trainer-name {
+  text-align: center;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.divider {
+  margin: 12px 0 18px;
+  background-color: #333;
+}
+
+.main-grid {
+  align-items: flex-start;
+}
+
+/* Columna izquierda (foto) */
+.trainer-left {
+  display: flex;
+  justify-content: center;  /* centra la imagen dentro de la columna */
+  align-items: flex-start;
+}
+
+/* Imagen rectangular vertical (no círculo) */
+.trainer-image-large {
+  width: 220px;
+  height: 300px;           /* Rectángulo vertical */
+  border-radius: 12px;     /* Bordes suaves */
+  border: 3px solid #555;
+  background-color: #2a2a2a;
+  object-fit: cover;       /* Recorte limpio sin deformar */
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.6); /* opcional: sombra bonita */
+}
+
+/* Columna derecha (datos) */
+.trainer-info {
+  display: grid;
+  gap: 8px;
+}
+
+/* Botón volver */
+.detail-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 28px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .trainer-left {
+    margin-bottom: 12px;
+    justify-content: flex-start;  /* en móvil, inicia a la izquierda */
+  }
+
+  .trainer-image-large {
+    width: 160px;
+    height: 220px; /* mantiene relación vertical en pantallas pequeñas */
+  }
+}

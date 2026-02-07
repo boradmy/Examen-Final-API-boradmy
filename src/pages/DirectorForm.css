@@ -1,0 +1,21 @@
+.form-card {
+  max-width: 500px;
+  margin: 30px auto;
+  padding: 20px;
+  background: #1e1e1e;
+  color: #f0f0f0;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 20px;
+}

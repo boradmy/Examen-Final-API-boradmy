@@ -1,0 +1,72 @@
+/* Barra de navegación */
+.toolbar-nav {
+  display: flex;
+  justify-content: space-between; /* separa nav a la izquierda y auth a la derecha */
+  align-items: center;
+}
+
+/* Botones de navegación */
+.pokedex-navbar .nav-btn {
+  margin: 0 12px;
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.pokedex-navbar .nav-btn:hover {
+  color: #00ffcc;
+}
+
+.pokedex-navbar .nav-btn.active {
+  border-bottom: 2px solid #00ffcc;
+}
+
+/* Botones especiales */
+.add-btn {
+  color: #00ffcc !important;
+  font-weight: bold;
+}
+
+/* Contenedor de login/logout siempre a la derecha */
+.auth-buttons {
+  margin-left: auto; /* fuerza a ir al extremo derecho */
+  display: flex;
+  align-items: center;
+}
+
+/* Botón de inicio de sesión (verde) */
+.login-btn {
+  margin-left: 20px;
+  background: #28a745; /* verde */
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 6px;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.login-btn:hover {
+  background: #218838; /* verde más oscuro */
+  transform: scale(1.05);
+}
+
+/* Botón de cerrar sesión (rojo) */
+.logout-btn {
+  margin-left: 20px;
+  background: #dc3545; /* rojo */
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 6px;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.logout-btn:hover {
+  background: #c82333; /* rojo más oscuro */
+  transform: scale(1.05);
+}
