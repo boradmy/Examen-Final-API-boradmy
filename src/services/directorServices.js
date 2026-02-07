@@ -2,7 +2,7 @@ import axios from "axios";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-// Interceptor global: añade el token automáticamente
+/* 🔐 Interceptor global */
 axios.interceptors.request.use((config) => {
   const token = localStorage.getItem("access_token");
   if (token) {
@@ -11,7 +11,7 @@ axios.interceptors.request.use((config) => {
   return config;
 });
 
-// Helper para convertir archivo a Base64
+/* Convertir archivo a Base64 */
 function fileToBase64(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -21,45 +21,45 @@ function fileToBase64(file) {
   });
 }
 
-export async function getEntrenadores() {
-  const res = await axios.get(`${API_BASE_URL}/entrenadores/`);
+/* Obtener directores */
+export async function getDirectores() {
+  const res = await axios.get(`${API_BASE_URL}/directores/`);
   return res.data;
 }
 
-export async function getEntrenadorById(id) {
-  const res = await axios.get(`${API_BASE_URL}/entrenadores/${id}/`);
+/* Obtener director por ID */
+export async function getDirectorById(id) {
+  const res = await axios.get(`${API_BASE_URL}/directores/${id}/`);
   return res.data;
 }
 
-export async function createEntrenador(data) {
-  let pictureBase64 = "";
-  if (data.picture) {
-    pictureBase64 = await fileToBase64(data.picture);
-  }
-
-  const payload = {
-    ...data,
-    picture: pictureBase64,
-  };
-
-  const res = await axios.post(`${API_BASE_URL}/entrenadores/`, payload);
-  return res.data;
-}
-
-export async function updateEntrenador(id, data) {
+/* Crear director */
+export async function createDirector(data) {
   let payload = { ...data };
 
   if (data.picture) {
-    const pictureBase64 = await fileToBase64(data.picture);
-    payload.picture = pictureBase64;
-  } else {
-    delete payload.picture; // no envía campo si no hay imagen nueva
+    payload.picture = await fileToBase64(data.picture);
   }
 
-  const res = await axios.put(`${API_BASE_URL}/entrenadores/${id}/`, payload);
+  const res = await axios.post(`${API_BASE_URL}/directores/`, payload);
   return res.data;
 }
 
-export async function deleteEntrenador(id) {
-  await axios.delete(`${API_BASE_URL}/entrenadores/${id}/`);
+/* Actualizar director */
+export async function updateDirector(id, data) {
+  let payload = { ...data };
+
+  if (data.picture) {
+    payload.picture = await fileToBase64(data.picture);
+  } else {
+    delete payload.picture;
+  }
+
+  const res = await axios.put(`${API_BASE_URL}/directores/${id}/`, payload);
+  return res.data;
+}
+
+/* Eliminar director */
+export async function deleteDirector(id) {
+  await axios.delete(`${API_BASE_URL}/directores/${id}/`);
 }

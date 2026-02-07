@@ -2,9 +2,9 @@ import { Button, Card, CardActions, CardContent, CardMedia, Typography } from "@
 import { useNavigate } from "react-router-dom";
 import "./CardStyles.css";
 
-export default function EntrenadorCard({ entrenador, isLoggedIn, onDelete }) {
+export default function DirectorCard({ director, isLoggedIn, onDelete }) {
   const mediaUrl = import.meta.env.VITE_MEDIA_URL;
-  const imageUrl = entrenador.picture ? `${mediaUrl}/${entrenador.picture}` : null;
+  const imageUrl = director.picture ? `${mediaUrl}/${director.picture}` : null;
   const navigate = useNavigate();
 
   return (
@@ -14,37 +14,34 @@ export default function EntrenadorCard({ entrenador, isLoggedIn, onDelete }) {
           component="img"
           className="card-media"
           image={imageUrl}
-          alt={entrenador.name}
+          alt={director.nombre}
         />
       )}
       <CardContent>
         <Typography variant="h5" component="div">
-          {entrenador.name}
+          {director.nombre}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Edad: {entrenador.age}
-        </Typography>
-        {entrenador.city && (
+        {director.nacionalidad && (
           <Typography variant="body2" color="text.secondary">
-            Ciudad: {entrenador.city}
+            Nacionalidad: {director.nacionalidad}
           </Typography>
         )}
-        {entrenador.specialty && (
+        {director.fecha_nacimiento && (
           <Typography variant="body2" color="text.secondary">
-            Especialidad: {entrenador.specialty}
+            Fecha de nacimiento: {director.fecha_nacimiento}
           </Typography>
         )}
       </CardContent>
       <CardActions>
-        <Button size="small" onClick={() => navigate(`/entrenador/${entrenador.id}`)}>
+        <Button size="small" onClick={() => navigate(`/directores/${director.id}`)}>
           Ver detalles
         </Button>
         {isLoggedIn && (
           <>
-            <Button size="small" onClick={() => navigate(`/edit-entrenador/${entrenador.id}`)}>
+            <Button size="small" onClick={() => navigate(`/edit-director/${director.id}`)}>
               Editar
             </Button>
-            <Button size="small" color="error" onClick={() => onDelete(entrenador)}>
+            <Button size="small" color="error" onClick={() => onDelete(director)}>
               Eliminar
             </Button>
           </>

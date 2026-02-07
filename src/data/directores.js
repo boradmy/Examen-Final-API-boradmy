@@ -1,4 +1,4 @@
-// src/data/entrenadores.js
+
 export const entrenadores = [
   {
     id: 1,

@@ -2,6 +2,7 @@ import axios from "axios";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
+/* 🔐 Interceptor */
 axios.interceptors.request.use((config) => {
   const token = localStorage.getItem("access_token");
   if (token) {
@@ -10,17 +11,7 @@ axios.interceptors.request.use((config) => {
   return config;
 });
 
-/**
- * Obtener la lista de pokemones
- */
-export async function fetchPokemons() {
-  const response = await axios.get(`${API_BASE_URL}/pokemons`);
-  return response.data;
-}
-
-/**
- * Convertir un archivo a Base64
- */
+/* Convertir archivo a Base64 */
 function fileToBase64(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -30,75 +21,45 @@ function fileToBase64(file) {
   });
 }
 
-/**
- * Crear un nuevo pokemon
- */
-export async function addPokemon(pokemonData) {
-  let pictureBase64 = "";
+/* Obtener películas */
+export async function getPeliculas() {
+  const res = await axios.get(`${API_BASE_URL}/peliculas/`);
+  return res.data;
+}
 
-  if (pokemonData.picture) {
-    pictureBase64 = await fileToBase64(pokemonData.picture);
+/* Obtener película por ID */
+export async function getPeliculaById(id) {
+  const res = await axios.get(`${API_BASE_URL}/peliculas/${id}/`);
+  return res.data;
+}
+
+/* Crear película */
+export async function createPelicula(data) {
+  let payload = { ...data };
+
+  if (data.poster) {
+    payload.poster = await fileToBase64(data.poster);
   }
 
-  const payload = {
-    ...pokemonData,
-    picture: pictureBase64,
-  };
-
-  const response = await axios.post(`${API_BASE_URL}/pokemons/`, payload);
-  return response.data;
+  const res = await axios.post(`${API_BASE_URL}/peliculas/`, payload);
+  return res.data;
 }
 
-/**
- * Obtener un pokemon por ID
- */
-export async function fetchPokemonById(id) {
-  const response = await axios.get(`${API_BASE_URL}/pokemons/${id}/`);
-  return response.data;
-}
+/* Actualizar película */
+export async function updatePelicula(id, data) {
+  let payload = { ...data };
 
-/**
- * Actualizar un pokemon existente
- */
-export async function updatePokemon(id, pokemonData) {
-  let payload = { ...pokemonData };
-
-  if (pokemonData.picture) {
-    const pictureBase64 = await fileToBase64(pokemonData.picture);
-    payload.picture = pictureBase64;
+  if (data.poster) {
+    payload.poster = await fileToBase64(data.poster);
   } else {
-    delete payload.picture; // ← no envía el campo si no hay imagen nueva
+    delete payload.poster;
   }
 
-  const response = await axios.put(`${API_BASE_URL}/pokemons/${id}/`, payload);
-  return response.data;
+  const res = await axios.put(`${API_BASE_URL}/peliculas/${id}/`, payload);
+  return res.data;
 }
 
-/**
- * Eliminar un pokemon
- */
-export async function deletePokemon(id) {
-  const response = await axios.delete(`${API_BASE_URL}/pokemons/${id}/`);
-  return response.data;
-}
-
-/**
- * Logout
- */
-export async function logout() {
-  const token = localStorage.getItem("access_token");
-  if (!token) return;
-
-  const params = new URLSearchParams();
-  params.append("token", token);
-  params.append("client_id", CLIENT_ID);
-  params.append("client_secret", CLIENT_SECRET);
-
-  await axios.post(`${AUTH_BASE_URL}/revoke_token/`, params, {
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-  });
-
-  localStorage.removeItem("access_token");
+/* Eliminar película */
+export async function deletePelicula(id) {
+  await axios.delete(`${API_BASE_URL}/peliculas/${id}/`);
 }

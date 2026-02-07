@@ -6,9 +6,6 @@ const CLIENT_SECRET = import.meta.env.VITE_CLIENT_SECRET;
 
 /**
  * Login de usuario
- * @param username
- * @param password
- * @returns
  */
 export async function login(username, password) {
   const params = new URLSearchParams();
@@ -27,6 +24,9 @@ export async function login(username, password) {
   return response.data;
 }
 
+/**
+ * Logout
+ */
 export async function logout() {
   const token = localStorage.getItem("access_token");
   if (!token) return;

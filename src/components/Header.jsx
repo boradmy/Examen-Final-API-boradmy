@@ -1,51 +1,61 @@
 import { AppBar, Container, Toolbar } from "@mui/material";
-import pokedexLogo from "../assets/pokedex-logo.png";
+import { NavLink, useNavigate } from "react-router-dom";
+import catflixLogo from "../assets/catflix-logo.png";
 import { logout } from "../services/authServices";
-import './Header.css';
-import { useNavigate, NavLink } from "react-router-dom";
+import "./Header.css";
 
 export default function Header() {
-  const isLoggedIn = localStorage.getItem('access_token') !== null;
+  const isLoggedIn = localStorage.getItem("access_token") !== null;
   const navigate = useNavigate();
 
   const handleLogout = async () => {
     await logout();
+    localStorage.removeItem("access_token");
     alert("Sesión cerrada exitosamente");
-    navigate('/'); 
-    window.location.reload();
+    navigate("/");
   };
 
-  return (
-    <header className="pokedex-navbar">
-      <Container>
-        <AppBar position="static">
-          {/* Logo centrado */}
-          <Toolbar style={{ justifyContent: 'center' }}>
-            <div className="image-container">
-              <img src={pokedexLogo} alt="Pokédex Logo" height={100} />
-            </div>
-          </Toolbar>
+  const navClass = ({ isActive }) =>
+    isActive ? "nav-btn active" : "nav-btn";
 
-          {/* Barra de navegación */}
-          <Toolbar className="toolbar-nav">
+  return (
+    <header className="catflix-navbar">
+      <AppBar position="static" className="catflix-appbar">
+        {/* Logo */}
+        <Toolbar sx={{ justifyContent: "center" }}>
+          <img src={catflixLogo} alt="CatFlix Logo" height={90} />
+        </Toolbar>
+
+        {/* Navegación */}
+        <Toolbar className="toolbar-nav">
+          <Container className="nav-container">
             <div className="nav-buttons">
-              <NavLink to="/" className="nav-btn">Inicio</NavLink>
-              <NavLink to="/pokemons" className="nav-btn">Pokémons</NavLink>
-              <NavLink to="/entrenadores" className="nav-btn">Entrenadores</NavLink>
+              <NavLink to="/" className={navClass}>
+                Inicio
+              </NavLink>
+
+              <NavLink to="/peliculas" className={navClass}>
+                Películas
+              </NavLink>
+
+              <NavLink to="/directores" className={navClass}>
+                Directores
+              </NavLink>
 
               {isLoggedIn && (
                 <>
-                  <NavLink to="/add-pokemon" className="nav-btn add-btn">
-                    Agregar Pokémon
+                  <NavLink to="/add-pelicula" className="nav-btn add-btn">
+                    + Película
                   </NavLink>
-                  <NavLink to="/add-entrenador" className="nav-btn add-btn">
-                    Agregar Entrenador
+
+                  <NavLink to="/add-director" className="nav-btn add-btn">
+                    + Director
                   </NavLink>
                 </>
               )}
             </div>
 
-            {/* Botones de login/logout */}
+            {/* Auth */}
             <div className="auth-buttons">
               {isLoggedIn ? (
                 <button className="logout-btn" onClick={handleLogout}>
@@ -57,9 +67,9 @@ export default function Header() {
                 </NavLink>
               )}
             </div>
-          </Toolbar>
-        </AppBar>
-      </Container>
+          </Container>
+        </Toolbar>
+      </AppBar>
     </header>
   );
 }

@@ -11,25 +11,25 @@ import {
   Grid,
 } from "@mui/material";
 
-import { getEntrenadorById } from "../services/trainerServices";
+import { getDirectorById } from "../services/directorServices";
 import Loading from "../components/Loading";
 
-import "./EntrenadorDetail.css";
+import "./DirectorDetail.css";
 
-export default function EntrenadorDetail() {
+export default function DirectorDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const [entrenador, setEntrenador] = useState(null);
+  const [director, setDirector] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const mediaUrl = import.meta.env.VITE_MEDIA_URL;
 
   useEffect(() => {
-    async function fetchEntrenador() {
+    async function fetchDirector() {
       try {
-        const data = await getEntrenadorById(id);
-        setEntrenador(data);
+        const data = await getDirectorById(id);
+        setDirector(data);
       } catch (error) {
         console.error(error);
       } finally {
@@ -37,73 +37,65 @@ export default function EntrenadorDetail() {
       }
     }
 
-    fetchEntrenador();
+    fetchDirector();
   }, [id]);
 
-  // 🔹 LOADING GLOBAL (MISMO PATRÓN)
   if (loading) {
-    return <Loading text="Cargando entrenador..." />;
+    return <Loading text="Cargando director..." />;
   }
 
-  // Seguridad extra por si no existe
-  if (!entrenador) {
+  if (!director) {
     return (
       <Typography variant="body1" color="text.secondary">
-        Entrenador no encontrado.
+        Director no encontrado.
       </Typography>
     );
   }
 
-  // ✅ MISMO PATRÓN QUE PokemonCard
-  const imageUrl = entrenador.picture
-    ? `${mediaUrl}/${entrenador.picture}`
+  const imageUrl = director.picture
+    ? `${mediaUrl}/${director.picture}`
     : null;
 
   return (
     <Card className="detail-card">
       <CardContent>
-        {/* Título */}
-        <Typography variant="h4" className="trainer-name">
-          {entrenador.name}
+        <Typography variant="h4" className="director-name">
+          {director.name}
         </Typography>
 
         <Divider className="divider" />
 
-        {/* Layout principal */}
-        <Grid container spacing={3} className="main-grid">
-          {/* Izquierda: Foto */}
+        <Grid container spacing={3}>
           <Grid item xs={12} md={4}>
-            <Box className="trainer-left">
+            <Box className="director-left">
               <Avatar
                 src={imageUrl}
-                alt={entrenador.name}
-                className="trainer-image-large"
+                alt={director.name}
+                className="director-image-large"
               />
             </Box>
           </Grid>
 
-          {/* Derecha: Datos */}
           <Grid item xs={12} md={8}>
-            <Box className="trainer-info">
-              <Typography variant="body1">
-                <strong>Edad:</strong> {entrenador.age}
+            <Box className="director-info">
+              <Typography>
+                <strong>Nacionalidad:</strong> {director.nationality}
               </Typography>
-              <Typography variant="body1">
-                <strong>Ciudad:</strong> {entrenador.city}
+              <Typography>
+                <strong>Año de nacimiento:</strong> {director.birthYear}
               </Typography>
-              <Typography variant="body1">
-                <strong>Especialidad:</strong> {entrenador.specialty}
+              <Typography>
+                <strong>Premios:</strong> {director.awards}
               </Typography>
             </Box>
           </Grid>
         </Grid>
 
-        {/* Botón Volver */}
         <div className="detail-actions">
           <Button
             variant="contained"
             color="secondary"
-            onClick={() => navigate("/entrenadores")}
+            onClick={() => navigate("/directores")}
           >
             Volver
           </Button>

@@ -1,4 +1,10 @@
-import { Box, Typography, TextField, Button, CircularProgress } from "@mui/material";
+import {
+  Box,
+  Typography,
+  TextField,
+  Button,
+  CircularProgress,
+} from "@mui/material";
 import { login } from "../services/authServices";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -32,11 +38,11 @@ export default function LoginPage() {
       );
 
       localStorage.setItem("access_token", responseData.access_token);
-      alert("Inicio de sesión exitoso");
+      alert("Bienvenido a CatFlix 🎬");
       navigate("/");
     } catch (error) {
       console.error("Error during login:", error);
-      alert("Error al iniciar sesión");
+      alert("Usuario o contraseña incorrectos");
     } finally {
       setLoading(false);
     }
@@ -46,7 +52,7 @@ export default function LoginPage() {
     <div className="login-page">
       <Box component="form" onSubmit={handleSubmit} className="login-box">
         <Typography variant="h5" gutterBottom>
-          Inicio de sesión
+          Iniciar sesión en CatFlix
         </Typography>
 
         <TextField
@@ -57,6 +63,7 @@ export default function LoginPage() {
           required
           disabled={loading}
           fullWidth
+          margin="normal"
         />
 
         <TextField
@@ -68,19 +75,22 @@ export default function LoginPage() {
           required
           disabled={loading}
           fullWidth
+          margin="normal"
         />
 
         <Button
           type="submit"
           variant="contained"
-          color="primary"
+          color="error"
           disabled={loading}
           className="login-button"
+          fullWidth
+          sx={{ mt: 2 }}
         >
           {loading ? (
             <CircularProgress size={24} color="inherit" />
           ) : (
-            "Iniciar sesión"
+            "Ingresar"
           )}
         </Button>
       </Box>

@@ -1,7 +1,15 @@
 .loading-container {
-  height: 100vh;
+  min-height: 60vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color: #0f0f0f;
+}
+
+.loading-text {
+  margin-top: 16px;
+  color: #e50914; /* rojo tipo Netflix */
+  font-weight: 600;
+  letter-spacing: 1px;
 }

@@ -11,15 +11,16 @@ import {
   Grid,
 } from "@mui/material";
 
-import { fetchPokemonById } from "../services/pokemonServices";
-import Loading from "../components/Loading"; // 👈 IMPORTANTE
-import "./PokemonDetail.css";
+import { getPeliculaById } from "../services/peliculaServices";
+import Loading from "../components/Loading";
 
-export default function PokemonDetail() {
+import "./PeliculaDetail.css";
+
+export default function PeliculaDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const [pokemon, setPokemon] = useState(null);
+  const [pelicula, setPelicula] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const mediaUrl = import.meta.env?.VITE_MEDIA_URL || "";
@@ -27,97 +28,98 @@ export default function PokemonDetail() {
   useEffect(() => {
     let mounted = true;
 
-    async function load() {
+    async function fetchPelicula() {
       try {
-        const data = await fetchPokemonById(id);
-        if (mounted) setPokemon(data || null);
-      } catch (err) {
-        console.error("Error obteniendo el Pokémon:", err);
-        alert("Error obteniendo el Pokémon");
+        const data = await getPeliculaById(id);
+        if (mounted) setPelicula(data || null);
+      } catch (error) {
+        console.error("Error cargando la película:", error);
+        alert("Error cargando la película");
       } finally {
         if (mounted) setLoading(false);
       }
     }
 
-    load();
-    return () => {
-      mounted = false;
-    };
+    fetchPelicula();
+    return () => (mounted = false);
   }, [id]);
 
-  // ✅ LOADING CENTRADO
+  // 🔹 LOADING GLOBAL
   if (loading) {
-    return <Loading text="Cargando Pokémon..." />;
+    return <Loading text="Cargando película..." />;
   }
 
-  if (!pokemon) {
+  if (!pelicula) {
     return (
       <Typography align="center" sx={{ mt: 4 }}>
-        No se encontró información del Pokémon.
+        No se encontró información de la película.
       </Typography>
     );
   }
 
-  // Construcción segura de la URL de imagen
+  // URL segura del póster
   let imageUrl = "";
-  if (pokemon.picture) {
-    const base = (mediaUrl || "").replace(/\/+$/, "");
-    const rel = String(pokemon.picture).replace(/^\/+/, "");
+  if (pelicula.poster) {
+    const base = mediaUrl.replace(/\/+$/, "");
+    const rel = String(pelicula.poster).replace(/^\/+/, "");
     imageUrl = base ? `${base}/${rel}` : `/${rel}`;
   }
 
-  // type puede ser string o array
-  const types = Array.isArray(pokemon.type)
-    ? pokemon.type
-    : pokemon.type
-    ? [pokemon.type]
-    : [];
-
   return (
-    <Card className="poke-detail-card">
+    <Card className="detail-card">
       <CardContent>
-        <Typography variant="h4" className="poke-name" gutterBottom>
-          {pokemon.name || "Pokémon"}
+        {/* Título */}
+        <Typography variant="h4" gutterBottom>
+          {pelicula.title}
         </Typography>
 
-        <Divider className="poke-divider" />
+        <Divider className="divider" />
 
-        <Grid container spacing={3} className="poke-main-grid">
+        <Grid container spacing={3}>
           {/* Imagen */}
           <Grid item xs={12} md={4}>
-            <Box className="poke-left">
+            <Box className="detail-left">
               <Avatar
                 src={imageUrl || undefined}
-                alt={pokemon.name || "Pokémon"}
+                alt={pelicula.title}
                 variant="square"
-                className="poke-image-rect"
+                className="detail-image-rect"
               />
             </Box>
           </Grid>
 
           {/* Información */}
           <Grid item xs={12} md={8}>
-            <Box className="poke-info">
-              {types.length > 0 && (
+            <Box className="detail-info">
+              {pelicula.genre && (
                 <Typography variant="body1">
-                  <strong>Tipo:</strong> {types.join(", ")}
+                  <strong>Género:</strong> {pelicula.genre}
                 </Typography>
               )}
-              {pokemon.height !== undefined && (
+
+              {pelicula.release_year && (
                 <Typography variant="body1">
-                  <strong>Altura:</strong> {pokemon.height}
+                  <strong>Año:</strong> {pelicula.release_year}
                 </Typography>
               )}
-              {pokemon.weight !== undefined && (
+
+              {pelicula.duration && (
                 <Typography variant="body1">
-                  <strong>Peso:</strong> {pokemon.weight}
+                  <strong>Duración:</strong> {pelicula.duration} min
+                </Typography>
+              )}
+
+              {pelicula.description && (
+                <Typography variant="body1" sx={{ mt: 2 }}>
+                  <strong>Descripción:</strong> {pelicula.description}
                 </Typography>
               )}
             </Box>
           </Grid>
         </Grid>
 
-        <div className="poke-actions">
+        {/* Botón volver */}
+        <div className="detail-actions">
           <Button
             variant="contained"
             color="secondary"

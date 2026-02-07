@@ -9,103 +9,117 @@ import {
 } from "@mui/material";
 
 import {
-  addPokemon,
-  fetchPokemonById,
-  updatePokemon,
-} from "../services/pokemonServices";
+  getPeliculaById,
+  createPelicula,
+  updatePelicula,
+} from "../services/peliculaServices";
 
-import Loading from "../components/Loading"; // 👈 loading centrado
-import "./PokemonForm.css";
+import Loading from "../components/Loading";
+import "./PeliculaForm.css";
 
-export default function PokemonForm() {
+export default function PeliculaForm() {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const [pokemonData, setPokemonData] = useState({
-    name: "",
-    type: "",
-    weight: "",
-    height: "",
-    picture: null,
+  const [peliculaData, setPeliculaData] = useState({
+    title: "",
+    genre: "",
+    release_year: "",
+    duration: "",
+    description: "",
+    poster: null,
   });
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(!!id);
+  const [saving, setSaving] = useState(false);
 
-  // 🔹 Cargar Pokémon si es edición
+  // 🔹 Cargar datos si es edición
   useEffect(() => {
     let mounted = true;
 
-    async function loadPokemon() {
+    async function loadPelicula() {
       if (!id) return;
 
-      setLoading(true);
       try {
-        const data = await fetchPokemonById(id);
+        const data = await getPeliculaById(id);
         if (mounted) {
-          setPokemonData({
-            name: data.name || "",
-            type: data.type || "",
-            weight: data.weight || "",
-            height: data.height || "",
-            picture: null,
+          setPeliculaData({
+            title: data.title || "",
+            genre: data.genre || "",
+            release_year: data.release_year || "",
+            duration: data.duration || "",
+            description: data.description || "",
+            poster: null, // el archivo solo se envía si se cambia
           });
         }
       } catch (error) {
-        console.error("Error cargando el Pokémon:", error);
-        alert("Error cargando el Pokémon");
+        console.error("Error cargando la película:", error);
+        alert("Error cargando la película");
       } finally {
         if (mounted) setLoading(false);
       }
     }
 
-    loadPokemon();
-    return () => {
-      mounted = false;
-    };
+    loadPelicula();
+    return () => (mounted = false);
   }, [id]);
 
+  // 🔹 Manejo de inputs
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-    setPokemonData({
-      ...pokemonData,
-      [name]: name === "picture" ? files[0] : value,
-    });
+    setPeliculaData((prev) => ({
+      ...prev,
+      [name]: name === "poster" ? files[0] : value,
+    }));
   };
 
+  // 🔹 Enviar formulario
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setSaving(true);
+
     try {
+      const formData = new FormData();
+      Object.entries(peliculaData).forEach(([key, value]) => {
+        if (value !== null && value !== "") {
+          formData.append(key, value);
+        }
+      });
+
       if (id) {
-        await updatePokemon(id, pokemonData);
-        alert("Pokémon actualizado exitosamente");
+        await updatePelicula(id, formData);
+        alert("Película actualizada correctamente");
       } else {
-        await addPokemon(pokemonData);
-        alert("Pokémon agregado exitosamente");
+        await createPelicula(formData);
+        alert("Película agregada correctamente");
       }
-      navigate("/pokemons");
+
+      navigate("/peliculas");
     } catch (error) {
-      console.error("Error guardando el Pokémon:", error);
-      alert("Error guardando el Pokémon");
+      console.error("Error guardando la película:", error);
+      alert("Error guardando la película");
+    } finally {
+      setSaving(false);
     }
   };
 
-  // ✅ LOADING CENTRADO
+  // 🔹 LOADING GLOBAL
   if (loading) {
-    return <Loading text="Cargando Pokémon..." />;
+    return <Loading text="Cargando película..." />;
   }
 
   return (
     <Card className="form-card">
       <CardContent>
         <Typography variant="h5" gutterBottom align="center">
-          {id ? "Editar Pokémon" : "Agregar Pokémon"}
+          {id ? "Editar Película" : "Agregar Película"}
         </Typography>
 
         <form onSubmit={handleSubmit} className="form-container">
           <TextField
-            label="Nombre"
-            name="name"
-            value={pokemonData.name}
+            label="Título"
+            name="title"
+            value={peliculaData.title}
             onChange={handleChange}
             fullWidth
             margin="normal"
@@ -113,9 +127,9 @@ export default function PokemonForm() {
           />
 
           <TextField
-            label="Tipo"
-            name="type"
-            value={pokemonData.type}
+            label="Género"
+            name="genre"
+            value={peliculaData.genre}
             onChange={handleChange}
             fullWidth
             margin="normal"
@@ -123,39 +137,59 @@ export default function PokemonForm() {
           />
 
           <TextField
-            label="Peso"
-            name="weight"
-            value={pokemonData.weight}
+            label="Año de estreno"
+            name="release_year"
+            type="number"
+            value={peliculaData.release_year}
             onChange={handleChange}
             fullWidth
             margin="normal"
           />
 
           <TextField
-            label="Altura"
-            name="height"
-            value={pokemonData.height}
+            label="Duración (min)"
+            name="duration"
+            type="number"
+            value={peliculaData.duration}
             onChange={handleChange}
             fullWidth
             margin="normal"
+          />
+
+          <TextField
+            label="Descripción"
+            name="description"
+            value={peliculaData.description}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+            multiline
+            rows={4}
           />
 
           <input
             type="file"
-            name="picture"
+            name="poster"
             accept="image/*"
             onChange={handleChange}
             className="file-input"
           />
 
           <div className="form-actions">
-            <Button type="submit" variant="contained" color="success">
-              {id ? "Guardar cambios" : "Guardar"}
+            <Button
+              type="submit"
+              variant="contained"
+              color="success"
+              disabled={saving}
+            >
+              {saving ? "Guardando..." : id ? "Guardar cambios" : "Guardar"}
             </Button>
+
             <Button
               variant="contained"
               color="error"
-              onClick={() => navigate("/pokemons")}
+              onClick={() => navigate("/peliculas")}
+              disabled={saving}
             >
               Cancelar
             </Button>

@@ -1,49 +1,52 @@
-import { Container } from '@mui/material';
-import Header from './components/Header';
+import { Container } from "@mui/material";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-// Páginas Pokémon
-import PokemonList from './pages/PokemonList';
-import PokemonForm from './pages/PokemonForm';
-import PokemonDetail from './pages/PokemonDetail';
+import Header from "./components/Header";
 
-// Páginas Entrenadores
-import EntrenadorList from './pages/EntrenadorList';
-import EntrenadorForm from './pages/EntrenadorForm';
-import EntrenadorDetail from './pages/EntrenadorDetail';
+// Páginas
+import Home from "./pages/Home";
+import LoginPage from "./pages/LoginPage";
 
-// Otras páginas
-import Home from './pages/Home';
-import LoginPage from './pages/LoginPage';
+// Películas
+import PeliculaList from "./pages/PeliculaList";
+import PeliculaForm from "./pages/PeliculaForm";
+import PeliculaDetail from "./pages/PeliculaDetail";
 
-import './App.css';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+// Directores
+import DirectorList from "./pages/DirectorList";
+import DirectorForm from "./pages/DirectorForm";
+import DirectorDetail from "./pages/DirectorDetail";
+
+import "./App.css";
 
 function App() {
   return (
-    <Container>
-      <BrowserRouter>
-        <Header />
+    <BrowserRouter>
+      <Header />
+
+      {/* Container SOLO para el contenido */}
+      <Container sx={{ mt: 3 }}>
         <Routes>
-          {/* Inicio */}
-          <Route path='/' element={<Home />} />
+          {/* Home */}
+          <Route path="/" element={<Home />} />
 
-          {/* Pokémons */}
-          <Route path='/pokemons' element={<PokemonList />} />
-          <Route path='/pokemon/:id' element={<PokemonDetail />} />
-          <Route path='/add-pokemon' element={<PokemonForm />} />
-          <Route path='/edit-pokemon/:id' element={<PokemonForm />} />
+          {/* Películas */}
+          <Route path="/peliculas" element={<PeliculaList />} />
+          <Route path="/pelicula/:id" element={<PeliculaDetail />} />
+          <Route path="/add-pelicula" element={<PeliculaForm />} />
+          <Route path="/edit-pelicula/:id" element={<PeliculaForm />} />
 
-          {/* Entrenadores */}
-          <Route path='/entrenadores' element={<EntrenadorList />} />
-          <Route path='/entrenador/:id' element={<EntrenadorDetail />} />
-          <Route path='/add-entrenador' element={<EntrenadorForm />} />
-          <Route path='/edit-entrenador/:id' element={<EntrenadorForm />} />
+          {/* Directores */}
+          <Route path="/directores" element={<DirectorList />} />
+          <Route path="/director/:id" element={<DirectorDetail />} />
+          <Route path="/add-director" element={<DirectorForm />} />
+          <Route path="/edit-director/:id" element={<DirectorForm />} />
 
           {/* Login */}
-          <Route path='/login' element={<LoginPage />} />
+          <Route path="/login" element={<LoginPage />} />
         </Routes>
-      </BrowserRouter>
-    </Container>
+      </Container>
+    </BrowserRouter>
   );
 }
 

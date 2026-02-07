@@ -1,59 +1,66 @@
 import { useEffect, useState } from "react";
 import { Grid, Typography } from "@mui/material";
 
-import EntrenadorCard from "../components/EntrenadorCard";
+import DirectorCard from "../components/DirectorCard";
 import Loading from "../components/Loading";
 
-import { getEntrenadores, deleteEntrenador } from "../services/trainerServices";
+import { getDirectores, deleteDirector } from "../services/directorServices";
 
-export default function EntrenadorList() {
-  const [entrenadores, setEntrenadores] = useState([]);
+export default function DirectorList() {
+  const [directores, setDirectores] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const isLoggedIn = localStorage.getItem("access_token") !== null;
 
   useEffect(() => {
-    async function fetchEntrenadores() {
+    async function fetchDirectores() {
       try {
-        const data = await getEntrenadores();
-        setEntrenadores(Array.isArray(data) ? data : []);
+        const data = await getDirectores();
+        setDirectores(Array.isArray(data) ? data : []);
       } catch (error) {
-        console.error("Error cargando entrenadores:", error);
+        console.error("Error cargando directores:", error);
       } finally {
         setLoading(false);
       }
     }
 
-    fetchEntrenadores();
+    fetchDirectores();
   }, []);
 
-  const handleDelete = async (entrenador) => {
-    if (window.confirm(`¿Seguro que quieres eliminar a ${entrenador.name}?`)) {
-      await deleteEntrenador(entrenador.id);
-      setEntrenadores((prev) =>
-        prev.filter((e) => e.id !== entrenador.id)
-      );
-      alert("Entrenador eliminado exitosamente");
+  const handleDelete = async (director) => {
+    if (
+      window.confirm(`¿Seguro que quieres eliminar a ${director.name}?`)
+    ) {
+      try {
+        await deleteDirector(director.id);
+        setDirectores((prev) =>
+          prev.filter((d) => d.id !== director.id)
+        );
+        alert("Director eliminado exitosamente");
+      } catch (error) {
+        console.error("Error eliminando director:", error);
+        alert("Error eliminando director");
+      }
     }
   };
 
   // 🔹 LOADING GLOBAL
   if (loading) {
-    return <Loading text="Cargando entrenadores..." />;
+    return <Loading text="Cargando directores..." />;
   }
 
   return (
     <div style={{ padding: "20px" }}>
       <Typography variant="h4" gutterBottom>
-        Lista de Entrenadores
+        Lista de Directores
       </Typography>
 
       <Grid container spacing={2}>
-        {entrenadores.length > 0 ? (
-          entrenadores.map((e) => (
-            <Grid item xs={12} sm={6} md={4} key={e.id}>
-              <EntrenadorCard
-                entrenador={e}
+        {directores.length > 0 ? (
+          directores.map((director) => (
+            <Grid item xs={12} sm={6} md={4} key={director.id}>
+              <DirectorCard
+                director={director}
                 isLoggedIn={isLoggedIn}
                 onDelete={handleDelete}
               />
@@ -61,7 +68,7 @@ export default function EntrenadorList() {
           ))
         ) : (
           <Typography variant="body1" color="text.secondary">
-            No hay entrenadores disponibles.
+            No hay directores disponibles.
           </Typography>
         )}
       </Grid>

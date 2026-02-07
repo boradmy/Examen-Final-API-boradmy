@@ -9,124 +9,121 @@ import {
 } from "@mui/material";
 
 import {
-  getEntrenadorById,
-  updateEntrenador,
-  createEntrenador,
-} from "../services/trainerServices";
+  getDirectorById,
+  updateDirector,
+  createDirector,
+} from "../services/directorServices";
 
 import Loading from "../components/Loading";
-import "./EntrenadorForm.css";
+import "./DirectorForm.css";
 
-export default function EntrenadorForm() {
+export default function DirectorForm() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const [trainerData, setTrainerData] = useState({
+  const [directorData, setDirectorData] = useState({
     name: "",
-    age: "",
-    city: "",
-    specialty: "",
+    nationality: "",
+    birthYear: "",
+    awards: "",
     picture: null,
   });
 
-  const [loading, setLoading] = useState(!!id); // solo carga si es edición
+  const [loading, setLoading] = useState(!!id);
 
   useEffect(() => {
     if (id) {
-      async function fetchEntrenador() {
+      async function fetchDirector() {
         try {
-          const data = await getEntrenadorById(id);
-          setTrainerData({
+          const data = await getDirectorById(id);
+          setDirectorData({
             name: data.name,
-            age: data.age,
-            city: data.city,
-            specialty: data.specialty,
-            picture: null, // imagen se maneja aparte
+            nationality: data.nationality,
+            birthYear: data.birthYear,
+            awards: data.awards,
+            picture: null,
           });
         } catch (error) {
-          console.error("Error cargando entrenador:", error);
-          alert("Error cargando entrenador");
+          console.error(error);
+          alert("Error cargando director");
         } finally {
           setLoading(false);
         }
       }
 
-      fetchEntrenador();
+      fetchDirector();
     }
   }, [id]);
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-
-    if (name === "picture") {
-      setTrainerData({ ...trainerData, picture: files[0] });
-    } else {
-      setTrainerData({ ...trainerData, [name]: value });
-    }
+    setDirectorData({
+      ...directorData,
+      [name]: name === "picture" ? files[0] : value,
+    });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       if (id) {
-        await updateEntrenador(id, trainerData);
-        alert("Entrenador actualizado exitosamente");
+        await updateDirector(id, directorData);
+        alert("Director actualizado correctamente");
       } else {
-        await createEntrenador(trainerData);
-        alert("Entrenador agregado exitosamente");
+        await createDirector(directorData);
+        alert("Director creado correctamente");
       }
-      navigate("/entrenadores");
+      navigate("/directores");
     } catch (error) {
-      console.error("Error guardando entrenador:", error);
-      alert("Error guardando entrenador");
+      console.error(error);
+      alert("Error guardando director");
     }
   };
 
-  // 🔹 LOADING (MISMO PATRÓN GLOBAL)
   if (loading) {
-    return <Loading text="Cargando entrenador..." />;
+    return <Loading text="Cargando director..." />;
   }
 
   return (
     <Card className="form-card">
       <CardContent>
         <Typography variant="h5" gutterBottom>
-          {id ? "Editar Entrenador" : "Agregar Entrenador"}
+          {id ? "Editar Director" : "Agregar Director"}
         </Typography>
 
         <form onSubmit={handleSubmit} className="form-container">
           <TextField
             label="Nombre"
             name="name"
-            value={trainerData.name}
+            value={directorData.name}
             onChange={handleChange}
             fullWidth
             margin="normal"
           />
 
           <TextField
-            label="Edad"
-            name="age"
+            label="Nacionalidad"
+            name="nationality"
+            value={directorData.nationality}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+          />
+
+          <TextField
+            label="Año de nacimiento"
+            name="birthYear"
             type="number"
-            value={trainerData.age}
+            value={directorData.birthYear}
             onChange={handleChange}
             fullWidth
             margin="normal"
           />
 
           <TextField
-            label="Ciudad"
-            name="city"
-            value={trainerData.city}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-          />
-
-          <TextField
-            label="Especialidad"
-            name="specialty"
-            value={trainerData.specialty}
+            label="Premios"
+            name="awards"
+            value={directorData.awards}
             onChange={handleChange}
             fullWidth
             margin="normal"
@@ -141,13 +138,13 @@ export default function EntrenadorForm() {
 
           <div className="form-actions">
             <Button type="submit" variant="contained" color="success">
-              {id ? "Guardar cambios" : "Guardar"}
+              Guardar
             </Button>
 
             <Button
               variant="contained"
               color="error"
-              onClick={() => navigate("/entrenadores")}
+              onClick={() => navigate("/directores")}
             >
               Cancelar
             </Button>
