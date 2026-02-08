@@ -42,37 +42,6 @@ export default function Home() {
 
   return (
     <div className="home-container">
-      {/* Sección Directores */}
-      <Typography variant="h4" className="section-title" gutterBottom>
-        Directores
-      </Typography>
-
-      <div className="card-row">
-        {directores.length ? (
-          <Grid container spacing={2} wrap="nowrap" className="scroll-row">
-            {directores.map((director) => (
-              <Grid item xs={12} sm={6} md={4} key={director.id}>
-                <DirectorCard
-                  director={director}
-                  isLoggedIn={isLoggedIn}
-                  onDelete={async () => {
-                    if (window.confirm(`¿Seguro que quieres eliminar a ${director.nombre}?`)) {
-                      await deleteDirector(director.id);
-                      setDirectores((prev) => prev.filter((d) => d.id !== director.id));
-                      alert("Director eliminado exitosamente");
-                    }
-                  }}
-                />
-              </Grid>
-            ))}
-          </Grid>
-        ) : (
-          <Typography className="empty-msg">No hay directores</Typography>
-        )}
-      </div>
-
-      <Divider sx={{ my: 4 }} />
-
       {/* Sección Películas */}
       <Typography variant="h4" className="section-title" gutterBottom>
         Películas
@@ -99,6 +68,37 @@ export default function Home() {
           </Grid>
         ) : (
           <Typography className="empty-msg">No hay películas</Typography>
+        )}
+      </div>
+
+      <Divider sx={{ my: 4 }} />
+
+      {/* Sección Directores */}
+      <Typography variant="h4" className="section-title" gutterBottom>
+        Directores
+      </Typography>
+
+      <div className="card-row">
+        {directores.length ? (
+          <Grid container spacing={2} wrap="nowrap" className="scroll-row">
+            {directores.map((director) => (
+              <Grid item xs={12} sm={6} md={4} key={director.id}>
+                <DirectorCard
+                  director={director}
+                  isLoggedIn={isLoggedIn}
+                  onDelete={async () => {
+                    if (window.confirm(`¿Seguro que quieres eliminar a ${director.nombre}?`)) {
+                      await deleteDirector(director.id);
+                      setDirectores((prev) => prev.filter((d) => d.id !== director.id));
+                      alert("Director eliminado exitosamente");
+                    }
+                  }}
+                />
+              </Grid>
+            ))}
+          </Grid>
+        ) : (
+          <Typography className="empty-msg">No hay directores</Typography>
         )}
       </div>
     </div>

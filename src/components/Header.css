@@ -41,8 +41,12 @@
 }
 
 .nav-btn.active {
-  color: #e50914;
+  color: #fff; /* 👈 texto blanco cuando está activo */
   border-bottom: 2px solid #e50914;
+}
+
+.nav-btn.active:hover {
+  color: #fff; /* mantiene blanco en hover */
 }
 
 .add-btn {
