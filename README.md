@@ -1,173 +1,171 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/zV6b-ZXN)
-# React: Pokédex
+React: CatFlix 🎬🐱
 
-## Descripción General
-Este repositorio contiene tres laboratorios progresivos para construir una aplicación Pokédex completa usando React, Material UI y consumo de APIs REST.
+Descripción General
 
----
+Este repositorio contiene el desarrollo de una aplicación CatFlix, un clon temático de Netflix orientado a películas y directores, construido con React, Material UI y consumo de APIs REST en Django.Incluye autenticación, CRUD de películas y directores, y un diseño inspirado en la estética oscura de Netflix.
 
-## Laboratorio 9: Introducción a React, Componentes y MUI
+Fase 1: Layout inicial con React y Material UI
 
-### Objetivo
-Construir el layout de una aplicación Pokédex utilizando React y Material UI. Se trabajará con datos simulados y se crearán componentes reutilizables.
+Objetivo
 
-### Requisitos previos
-- Node.js y npm instalados
-- Editor de código (recomendado: VS Code)
-- Navegador actualizado (recomendado: Chrome)
-- React (usar Vite)
+Construir el layout base de CatFlix con React y Material UI, incluyendo:
 
-### Requisitos técnicos
-- Material UI (@mui/material, @emotion/react, @emotion/styled)
-- Datos simulados (sin consumo de API)
+Header con navegación.
 
-### Estructura del proyecto
-```
+Página de inicio con secciones de películas y directores.
+
+Componentes reutilizables para tarjetas.
+
+Requisitos previos
+
+Node.js y npm instalados
+
+Editor de código (VS Code recomendado)
+
+Navegador actualizado (Chrome recomendado)
+
+React con Vite
+
+Requisitos técnicos
+
+Material UI (@mui/material, @emotion/react, @emotion/styled)
+
+Estilos personalizados con CSS
+
+Estructura inicial
+
 /src
   /components
     Header.jsx
-    PokemonCard.jsx
+    PeliculaCard.jsx
+    DirectorCard.jsx
   /pages
-    App.jsx
-  /data
-    pokemons.js
+    Home.jsx
+    LoginPage.jsx
   main.jsx
-```
 
----
+Fase 2: Consumo de API REST con Axios
 
-## Laboratorio 10: Llamadas a API REST con Axios
+Objetivo
 
-### Objetivo
-Integrar llamadas a una API REST generada en Django (laboratorios 5-8 en otro repositorio) para consumir datos de Pokémon en tiempo real.
+Integrar llamadas a la API REST generada en Django para obtener datos reales de películas y directores.
 
-### Requisitos técnicos
-- Axios para realizar peticiones HTTP
-- Variables de entorno (.env) para configurar URLs de API
-- Servicios reutilizables para las llamadas a API
+Requisitos técnicos
 
-### Nuevas características
-- Consumo de endpoint `/api/pokemons/` para obtener lista de Pokémon
-- Configuración de URL base de API en variables de entorno
-- Creación de servicios en `pokemonService.js`
+Axios para peticiones HTTP
 
-### Estructura actualizada
-```
-/src
-  /components
-    #### Tus componentes irán aquí
-  /pages
-    App.jsx
-  /services
-    #### Tus servicios irán aquí
-  .env
-  main.jsx
-```
+Variables de entorno (.env) para configurar URLs de API
 
-### Variables de entorno (.env)
-```
-VITE_API_BASE_URL=http://localhost:8000
-VITE_API_MEDIA_URL=${VITE_API_BASE_URL}/media/
-```
+Servicios reutilizables (peliculaServices.js, directorServices.js, authServices.js)
 
----
+Nuevas características
 
-## Laboratorio 11: Llamadas a API REST con Axios y Gestión de Autorización
+Consumo de endpoints /api/peliculas/ y /api/directores/
 
-### Objetivo
-Implementar un sistema completo de autenticación OAuth con Django, incluyendo login, logout y protección de rutas.
+Servicios centralizados para CRUD
 
-### Requisitos técnicos
-- Autenticación OAuth con Django
-- Gestión de tokens de acceso en localStorage
-- Interceptores de Axios para agregar tokens a las peticiones
-- Rutas protegidas con React Router
-- Formulario de login y creación de Pokémon
+Manejo de imágenes desde el backend
 
-### Nuevas características
-- Página de login con autenticación OAuth (`/login`)
-- Página para agregar Pokémon (`/add-pokemon`)
-- Sistema de logout con revocación de token
-- Protección de rutas basada en autenticación
-- Conversión de imágenes a base64
-- Interceptores de Axios para autorización
+Estructura actualizada
 
-### Estructura actualizada
-```
 /src
   /components
     Header.jsx
-    PokemonCard.jsx
+    PeliculaCard.jsx
+    DirectorCard.jsx
   /pages
-    App.jsx
-    Login.jsx
-    AddPokemon.jsx
+    Home.jsx
+    LoginPage.jsx
   /services
-    pokemonService.js
+    peliculaServices.js
+    directorServices.js
+    authServices.js
   .env
   main.jsx
-```
 
-### Variables de entorno (.env)
-```
+Variables de entorno (.env)
+
 VITE_API_BASE_URL=http://localhost:8000
 VITE_API_MEDIA_URL=${VITE_API_BASE_URL}/media/
-VITE_API_CLIENT_ID=tu_client_id
-VITE_API_CLIENT_SECRET=tu_client_secret
-```
 
----
+Fase 3: Autenticación y Autorización
 
-## Instalación del proyecto
+Objetivo
 
-1. **Clonar el repositorio** (este paso lo hará GitHub Classroom automáticamente).
-2. Abrir en VS Code la carpeta de tu repositorio clonado
-3. Instalar las dependencias base:
-   ```bash
-   npm install
-   ```
-4. Instalar Material UI y sus dependencias:
-   ```bash
-   npm install @mui/material @emotion/react @emotion/styled
-   ```
-5. Instalar Axios (necesario desde Laboratorio 10):
-   ```bash
-   npm install axios
-   ```
-6. Instalar React Router (necesario desde Laboratorio 11):
-   ```bash
-   npm install react-router-dom
-   ```
+Implementar login, logout y protección de rutas con React Router y tokens de acceso.
 
-### Comandos útiles
-- Ejecutar el servidor de desarrollo
-    ```bash
-    npm run dev
-    ```
-- Comprobar versión de dependencias
-    ```bash
-    npm list
-    ```
-- Limpiar dependencias
-    ```bash
-    rm -rf node_modules
-    npm install
-    ```
+Requisitos técnicos
 
-### Comandos git
-- Verificar los archivos modificados
-    ```bash
-    git status
-    ```
-- Agregar archivos al área de preparación
-    ```bash
-    git add .
-    ```
-- Realizar un commit
-    ```bash
-    git commit -m "Laboratorio [9/10/11]: descripción de cambios"
-    ```
-- Enviar los cambios a github
-    ```bash
-    git push
-    ```
+Autenticación con Django (OAuth o JWT)
+
+Tokens almacenados en localStorage
+
+Interceptores de Axios para autorización
+
+Rutas protegidas con React Router
+
+Nuevas características
+
+Página de login (/login)
+
+Botones de logout en el header
+
+Rutas protegidas para agregar películas y directores
+
+Íconos de edición y eliminación en tarjetas (solo si el usuario está logueado)
+
+Instalación del proyecto
+
+Clonar el repositorio
+
+git clone <url-del-repo>
+cd catflix
+
+Instalar dependencias base
+
+npm install
+
+Instalar Material UI y dependencias
+
+npm install @mui/material @emotion/react @emotion/styled
+
+Instalar Axios y React Router
+
+npm install axios react-router-dom
+
+Instalar íconos de Material UI (versión 5.x)
+
+npm install @mui/icons-material@5.15.15
+
+Comandos útiles
+
+Ejecutar servidor de desarrollo:
+
+npm run dev
+
+Verificar dependencias:
+
+npm list
+
+Limpiar dependencias:
+
+rm -rf node_modules
+npm install
+
+Comandos Git
+
+Verificar archivos modificados:
+
+git status
+
+Agregar cambios:
+
+git add .
+
+Commit:
+
+git commit -m "CatFlix: actualización de componentes y servicios"
+
+Push:
+
+git push
