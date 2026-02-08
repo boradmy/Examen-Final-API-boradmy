@@ -2,8 +2,17 @@ import axios from "axios";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-/* 🔐 Interceptor global */
-axios.interceptors.request.use((config) => {
+/* =========================
+   INSTANCIA AXIOS
+========================= */
+const api = axios.create({
+  baseURL: API_BASE_URL,
+});
+
+/* =========================
+   INTERCEPTOR TOKEN
+========================= */
+api.interceptors.request.use((config) => {
   const token = localStorage.getItem("access_token");
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
@@ -11,55 +20,64 @@ axios.interceptors.request.use((config) => {
   return config;
 });
 
-/* Convertir archivo a Base64 */
-function fileToBase64(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  });
-}
-
-/* Obtener directores */
+/* =========================
+   OBTENER DIRECTORES
+========================= */
 export async function getDirectores() {
-  const res = await axios.get(`${API_BASE_URL}/directores/`);
+  const res = await api.get("/directores/");
   return res.data;
 }
 
-/* Obtener director por ID */
 export async function getDirectorById(id) {
-  const res = await axios.get(`${API_BASE_URL}/directores/${id}/`);
+  const res = await api.get(`/directores/${id}/`);
   return res.data;
 }
 
-/* Crear director */
+/* =========================
+   CREAR DIRECTOR
+========================= */
 export async function createDirector(data) {
-  let payload = { ...data };
+  const formData = new FormData();
 
-  if (data.picture) {
-    payload.picture = await fileToBase64(data.picture);
-  }
+  Object.keys(data).forEach((key) => {
+    if (data[key] !== null && data[key] !== "") {
+      formData.append(key, data[key]);
+    }
+  });
 
-  const res = await axios.post(`${API_BASE_URL}/directores/`, payload);
+  const res = await api.post("/directores/", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+
   return res.data;
 }
 
-/* Actualizar director */
+/* =========================
+   ACTUALIZAR DIRECTOR
+========================= */
 export async function updateDirector(id, data) {
-  let payload = { ...data };
+  const formData = new FormData();
 
-  if (data.picture) {
-    payload.picture = await fileToBase64(data.picture);
-  } else {
-    delete payload.picture;
-  }
+  Object.keys(data).forEach((key) => {
+    if (data[key] !== null && data[key] !== "") {
+      formData.append(key, data[key]);
+    }
+  });
 
-  const res = await axios.put(`${API_BASE_URL}/directores/${id}/`, payload);
+  const res = await api.put(`/directores/${id}/`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+
   return res.data;
 }
 
-/* Eliminar director */
+/* =========================
+   ELIMINAR DIRECTOR
+========================= */
 export async function deleteDirector(id) {
-  await axios.delete(`${API_BASE_URL}/directores/${id}/`);
+  await api.delete(`/directores/${id}/`);
 }

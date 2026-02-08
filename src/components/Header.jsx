@@ -1,4 +1,4 @@
-import { AppBar, Container, Toolbar } from "@mui/material";
+import { AppBar, Container, Toolbar, Box } from "@mui/material";
 import { NavLink, useNavigate } from "react-router-dom";
 import catflixLogo from "../assets/catflix-logo.png";
 import { logout } from "../services/authServices";
@@ -21,9 +21,23 @@ export default function Header() {
   return (
     <header className="catflix-navbar">
       <AppBar position="static" className="catflix-appbar">
-        {/* Logo */}
-        <Toolbar sx={{ justifyContent: "center" }}>
-          <img src={catflixLogo} alt="CatFlix Logo" height={90} />
+        {/* Logo centrado + Auth a la derecha */}
+        <Toolbar className="toolbar-top">
+          <Box sx={{ flexGrow: 1, display: "flex", justifyContent: "center" }}>
+            <img src={catflixLogo} alt="CatFlix Logo" className="catflix-logo" />
+          </Box>
+
+          <div className="auth-buttons">
+            {isLoggedIn ? (
+              <button className="logout-btn" onClick={handleLogout}>
+                Cerrar sesión
+              </button>
+            ) : (
+              <NavLink to="/login" className="login-btn">
+                Iniciar sesión
+              </NavLink>
+            )}
+          </div>
         </Toolbar>
 
         {/* Navegación */}
@@ -52,19 +66,6 @@ export default function Header() {
                     + Director
                   </NavLink>
                 </>
-              )}
-            </div>
-
-            {/* Auth */}
-            <div className="auth-buttons">
-              {isLoggedIn ? (
-                <button className="logout-btn" onClick={handleLogout}>
-                  Cerrar sesión
-                </button>
-              ) : (
-                <NavLink to="/login" className="login-btn">
-                  Iniciar sesión
-                </NavLink>
               )}
             </div>
           </Container>

@@ -32,13 +32,13 @@ function App() {
 
           {/* Películas */}
           <Route path="/peliculas" element={<PeliculaList />} />
-          <Route path="/pelicula/:id" element={<PeliculaDetail />} />
+          <Route path="/peliculas/:id" element={<PeliculaDetail />} />   {/* ✅ plural */}
           <Route path="/add-pelicula" element={<PeliculaForm />} />
           <Route path="/edit-pelicula/:id" element={<PeliculaForm />} />
 
           {/* Directores */}
           <Route path="/directores" element={<DirectorList />} />
-          <Route path="/director/:id" element={<DirectorDetail />} />
+          <Route path="/directores/:id" element={<DirectorDetail />} />  {/* ✅ plural */}
           <Route path="/add-director" element={<DirectorForm />} />
           <Route path="/edit-director/:id" element={<DirectorForm />} />
 

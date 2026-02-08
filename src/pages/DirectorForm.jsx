@@ -22,10 +22,8 @@ export default function DirectorForm() {
   const navigate = useNavigate();
 
   const [directorData, setDirectorData] = useState({
-    name: "",
-    nationality: "",
-    birthYear: "",
-    awards: "",
+    nombre: "",
+    nacionalidad: "",
     picture: null,
   });
 
@@ -37,14 +35,12 @@ export default function DirectorForm() {
         try {
           const data = await getDirectorById(id);
           setDirectorData({
-            name: data.name,
-            nationality: data.nationality,
-            birthYear: data.birthYear,
-            awards: data.awards,
-            picture: null,
+            nombre: data.nombre || "",
+            nacionalidad: data.nacionalidad || "",
+            picture: null, // no cargamos imagen existente
           });
         } catch (error) {
-          console.error(error);
+          console.error("Error cargando director:", error);
           alert("Error cargando director");
         } finally {
           setLoading(false);
@@ -75,7 +71,7 @@ export default function DirectorForm() {
       }
       navigate("/directores");
     } catch (error) {
-      console.error(error);
+      console.error("Error guardando director:", error);
       alert("Error guardando director");
     }
   };
@@ -85,48 +81,33 @@ export default function DirectorForm() {
   }
 
   return (
-    <Card className="form-card">
+    <Card className="form-card" sx={{ backgroundColor: "#1c1c1c", color: "#fff" }}>
       <CardContent>
-        <Typography variant="h5" gutterBottom>
+        <Typography variant="h5" gutterBottom sx={{ color: "#e50914", fontWeight: "bold" }}>
           {id ? "Editar Director" : "Agregar Director"}
         </Typography>
 
         <form onSubmit={handleSubmit} className="form-container">
           <TextField
             label="Nombre"
-            name="name"
-            value={directorData.name}
+            name="nombre"
+            value={directorData.nombre}
             onChange={handleChange}
             fullWidth
             margin="normal"
+            InputLabelProps={{ style: { color: "#fff" } }}
+            InputProps={{ style: { color: "#fff" } }}
           />
 
           <TextField
             label="Nacionalidad"
-            name="nationality"
-            value={directorData.nationality}
+            name="nacionalidad"
+            value={directorData.nacionalidad}
             onChange={handleChange}
             fullWidth
             margin="normal"
-          />
-
-          <TextField
-            label="Año de nacimiento"
-            name="birthYear"
-            type="number"
-            value={directorData.birthYear}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-          />
-
-          <TextField
-            label="Premios"
-            name="awards"
-            value={directorData.awards}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
+            InputLabelProps={{ style: { color: "#fff" } }}
+            InputProps={{ style: { color: "#fff" } }}
           />
 
           <input
@@ -134,6 +115,7 @@ export default function DirectorForm() {
             name="picture"
             accept="image/*"
             onChange={handleChange}
+            style={{ marginTop: "15px", marginBottom: "15px" }}
           />
 
           <div className="form-actions">
@@ -145,6 +127,7 @@ export default function DirectorForm() {
               variant="contained"
               color="error"
               onClick={() => navigate("/directores")}
+              sx={{ ml: 2 }}
             >
               Cancelar
             </Button>

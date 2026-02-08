@@ -3,7 +3,6 @@ import { Grid, Typography } from "@mui/material";
 
 import DirectorCard from "../components/DirectorCard";
 import Loading from "../components/Loading";
-
 import { getDirectores, deleteDirector } from "../services/directorServices";
 
 export default function DirectorList() {
@@ -16,9 +15,11 @@ export default function DirectorList() {
     async function fetchDirectores() {
       try {
         const data = await getDirectores();
-        setDirectores(Array.isArray(data) ? data : []);
+        // ✅ soporta array directo o paginado con results
+        setDirectores(Array.isArray(data) ? data : data.results || []);
       } catch (error) {
         console.error("Error cargando directores:", error);
+        alert("Error obteniendo los directores");
       } finally {
         setLoading(false);
       }
@@ -28,14 +29,10 @@ export default function DirectorList() {
   }, []);
 
   const handleDelete = async (director) => {
-    if (
-      window.confirm(`¿Seguro que quieres eliminar a ${director.name}?`)
-    ) {
+    if (window.confirm(`¿Seguro que quieres eliminar a ${director.nombre}?`)) {
       try {
         await deleteDirector(director.id);
-        setDirectores((prev) =>
-          prev.filter((d) => d.id !== director.id)
-        );
+        setDirectores((prev) => prev.filter((d) => d.id !== director.id));
         alert("Director eliminado exitosamente");
       } catch (error) {
         console.error("Error eliminando director:", error);
@@ -62,7 +59,7 @@ export default function DirectorList() {
               <DirectorCard
                 director={director}
                 isLoggedIn={isLoggedIn}
-                onDelete={handleDelete}
+                onDelete={() => handleDelete(director)}
               />
             </Grid>
           ))

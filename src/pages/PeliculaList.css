@@ -1,0 +1,24 @@
+.pelicula-list-container {
+  background-color: #141414;
+  color: #fff;
+  padding: 2rem;
+  min-height: 100vh;
+}
+
+.section-title {
+  color: #e50914; /* rojo Netflix */
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.scroll-row {
+  flex-wrap: nowrap !important;
+  overflow-x: auto;
+  padding-bottom: 1rem;
+}
+
+.empty-msg {
+  color: #aaa;
+  font-style: italic;
+  margin-left: 1rem;
+}

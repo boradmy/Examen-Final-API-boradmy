@@ -5,7 +5,6 @@ import {
   CardContent,
   Typography,
   Button,
-  Avatar,
   Divider,
   Box,
   Grid,
@@ -23,25 +22,20 @@ export default function PeliculaDetail() {
   const [pelicula, setPelicula] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const mediaUrl = import.meta.env?.VITE_MEDIA_URL || "";
-
   useEffect(() => {
-    let mounted = true;
-
     async function fetchPelicula() {
       try {
         const data = await getPeliculaById(id);
-        if (mounted) setPelicula(data || null);
+        setPelicula(data || null);
       } catch (error) {
         console.error("Error cargando la película:", error);
         alert("Error cargando la película");
       } finally {
-        if (mounted) setLoading(false);
+        setLoading(false);
       }
     }
 
     fetchPelicula();
-    return () => (mounted = false);
   }, [id]);
 
   // 🔹 LOADING GLOBAL
@@ -57,61 +51,49 @@ export default function PeliculaDetail() {
     );
   }
 
-  // URL segura del póster
-  let imageUrl = "";
-  if (pelicula.poster) {
-    const base = mediaUrl.replace(/\/+$/, "");
-    const rel = String(pelicula.poster).replace(/^\/+/, "");
-    imageUrl = base ? `${base}/${rel}` : `/${rel}`;
-  }
-
   return (
-    <Card className="detail-card">
+    <Card className="detail-card" sx={{ backgroundColor: "#1c1c1c", color: "#fff" }}>
       <CardContent>
         {/* Título */}
-        <Typography variant="h4" gutterBottom>
-          {pelicula.title}
+        <Typography variant="h4" gutterBottom sx={{ color: "#e50914", fontWeight: "bold" }}>
+          {pelicula.titulo}
         </Typography>
 
-        <Divider className="divider" />
+        <Divider sx={{ my: 2, borderColor: "#e50914" }} />
 
         <Grid container spacing={3}>
           {/* Imagen */}
           <Grid item xs={12} md={4}>
             <Box className="detail-left">
-              <Avatar
-                src={imageUrl || undefined}
-                alt={pelicula.title}
-                variant="square"
-                className="detail-image-rect"
-              />
+              {pelicula.picture && (
+                <img
+                  src={pelicula.picture}   // ✅ usar directamente el campo del backend
+                  alt={pelicula.titulo}
+                  className="detail-image-rect"
+                  style={{ width: "100%", borderRadius: "8px" }}
+                />
+              )}
             </Box>
           </Grid>
 
           {/* Información */}
           <Grid item xs={12} md={8}>
             <Box className="detail-info">
-              {pelicula.genre && (
+              {pelicula.genero && (
                 <Typography variant="body1">
-                  <strong>Género:</strong> {pelicula.genre}
+                  <strong>Género:</strong> {pelicula.genero}
                 </Typography>
               )}
 
-              {pelicula.release_year && (
+              {pelicula.anio && (
                 <Typography variant="body1">
-                  <strong>Año:</strong> {pelicula.release_year}
+                  <strong>Año:</strong> {pelicula.anio}
                 </Typography>
               )}
 
-              {pelicula.duration && (
+              {pelicula.director && (
                 <Typography variant="body1">
-                  <strong>Duración:</strong> {pelicula.duration} min
-                </Typography>
-              )}
-
-              {pelicula.description && (
-                <Typography variant="body1" sx={{ mt: 2 }}>
-                  <strong>Descripción:</strong> {pelicula.description}
+                  <strong>Director:</strong> {pelicula.director.nombre}
                 </Typography>
               )}
             </Box>
@@ -119,7 +101,7 @@ export default function PeliculaDetail() {
         </Grid>
 
         {/* Botón volver */}
-        <div className="detail-actions">
+        <div className="detail-actions" style={{ marginTop: "20px" }}>
           <Button
             variant="contained"
             color="secondary"
