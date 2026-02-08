@@ -1,24 +1,45 @@
-.pelicula-list-container {
-  background-color: #141414;
+.detail-card {
+  background-color: #1c1c1c;
   color: #fff;
-  padding: 2rem;
-  min-height: 100vh;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.6);
+  padding: 20px;
 }
 
-.section-title {
-  color: #e50914; /* rojo Netflix */
+.detail-title {
+  color: #e50914;
   font-weight: bold;
-  margin-bottom: 1rem;
 }
 
-.scroll-row {
-  flex-wrap: nowrap !important;
-  overflow-x: auto;
-  padding-bottom: 1rem;
+.detail-divider {
+  margin: 16px 0;
+  border-color: #e50914;
 }
 
-.empty-msg {
-  color: #aaa;
-  font-style: italic;
-  margin-left: 1rem;
+.detail-info,
+.director-info {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #bbb;
+}
+
+.detail-actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center; /* ✅ centra el botón */
+}
+
+.btn-primary {
+  background-color: #e50914;
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #f6121d;
 }

@@ -39,16 +39,14 @@ export async function getPeliculaById(id) {
 export async function createPelicula(data) {
   const formData = new FormData();
 
-  Object.keys(data).forEach((key) => {
-    if (data[key] !== null && data[key] !== "") {
-      formData.append(key, data[key]);
-    }
-  });
+  if (data.titulo) formData.append("titulo", data.titulo);
+  if (data.genero) formData.append("genero", data.genero);
+  if (data.anio) formData.append("anio", Number(data.anio));
+  if (data.director) formData.append("director", data.director); // 👈 corregido
+  if (data.picture) formData.append("picture", data.picture);
 
   const res = await api.post("/peliculas/", formData, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
+    headers: { "Content-Type": "multipart/form-data" },
   });
 
   return res.data;
@@ -60,16 +58,14 @@ export async function createPelicula(data) {
 export async function updatePelicula(id, data) {
   const formData = new FormData();
 
-  Object.keys(data).forEach((key) => {
-    if (data[key] !== null && data[key] !== "") {
-      formData.append(key, data[key]);
-    }
-  });
+  if (data.titulo) formData.append("titulo", data.titulo);
+  if (data.genero) formData.append("genero", data.genero);
+  if (data.anio) formData.append("anio", Number(data.anio));
+  if (data.director) formData.append("director", data.director); // 👈 corregido
+  if (data.picture) formData.append("picture", data.picture);
 
   const res = await api.put(`/peliculas/${id}/`, formData, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
+    headers: { "Content-Type": "multipart/form-data" },
   });
 
   return res.data;

@@ -13,6 +13,9 @@ export default function Header() {
     localStorage.removeItem("access_token");
     alert("Sesión cerrada exitosamente");
     navigate("/");
+
+    // ✅ recarga la página para actualizar el Header
+    window.location.reload();
   };
 
   const navClass = ({ isActive }) =>

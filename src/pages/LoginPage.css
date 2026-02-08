@@ -1,9 +1,9 @@
 .login-page {
   min-height: 100vh;
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding-top: 120px;     
+  justify-content: center;   /* ✅ centra horizontal */
+  align-items: center;       /* ✅ centra vertical */
+  background-color: #141414; /* ✅ fondo oscuro estilo Netflix */
 }
 
 .login-box {

@@ -1,43 +1,42 @@
 import { Card, CardMedia, CardContent, CardActions, Typography, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import "./CardStyles.css"; // ✅ importa tu CSS
 
 export default function PeliculaCard({ movie, isLoggedIn, onDelete }) {
   const navigate = useNavigate();
 
   return (
-    <Card sx={{ maxWidth: 345, backgroundColor: "#1c1c1c", color: "#fff" }}>
+    <Card className="card-container">
       {movie.picture && (
         <CardMedia
           component="img"
           className="card-media"
           image={movie.picture}   // ✅ usar directamente el campo del backend
           alt={movie.titulo}
-          sx={{ height: 200, objectFit: "cover" }}
         />
       )}
 
-      <CardContent>
-        <Typography variant="h5" sx={{ color: "#e50914", fontWeight: "bold" }}>
+      <CardContent className="card-content">
+        <Typography variant="h5" className="card-title">
           {movie.titulo}
         </Typography>
 
         {movie.genero && (
-          <Typography variant="body2" color="text.secondary">
+          <Typography variant="body2" className="card-subtitle">
             Género: {movie.genero}
           </Typography>
         )}
 
         {movie.anio && (
-          <Typography variant="body2" color="text.secondary">
+          <Typography variant="body2" className="card-subtitle">
             Año: {movie.anio}
           </Typography>
         )}
       </CardContent>
 
-      <CardActions>
+      <CardActions className="card-actions">
         <Button
-          variant="contained"
-          color="primary"
+          className="btn-primary"
           onClick={() => navigate(`/peliculas/${movie.id}`)}
         >
           Ver detalles
@@ -46,15 +45,13 @@ export default function PeliculaCard({ movie, isLoggedIn, onDelete }) {
         {isLoggedIn && (
           <>
             <Button
-              variant="outlined"
-              color="warning"
+              className="btn-warning"
               onClick={() => navigate(`/edit-pelicula/${movie.id}`)}
             >
               Editar
             </Button>
             <Button
-              variant="outlined"
-              color="error"
+              className="btn-danger"
               onClick={() => onDelete(movie)}
             >
               Eliminar

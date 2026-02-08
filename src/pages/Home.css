@@ -1,27 +1,21 @@
-.home-container {
+html, body {
   background-color: #141414; /* fondo oscuro estilo Netflix */
   color: #fff;
+  margin: 0;        /* elimina márgenes por defecto */
+  padding: 0;       /* elimina padding por defecto */
+  width: 100%;      /* ocupa todo el ancho */
+  height: 100%;     /* ocupa todo el alto */
+  overflow-x: hidden; /* evita scroll horizontal con bordes blancos */
+}
+
+#root {
+  min-height: 100vh; /* asegura que el contenedor principal cubra toda la pantalla */
+  background-color: #141414;
+}
+
+.home-container {
+  background-color: #141414;
+  color: #ffffff;
   padding: 2rem;
   min-height: 100vh;
-}
-
-.section-title {
-  color: #e50914; /* rojo Netflix */
-  font-weight: bold;
-  margin-bottom: 1rem;
-}
-
-.card-row {
-  overflow-x: auto;
-  padding-bottom: 1rem;
-}
-
-.scroll-row {
-  flex-wrap: nowrap !important;
-}
-
-.empty-msg {
-  color: #aaa;
-  font-style: italic;
-  margin-left: 1rem;
 }

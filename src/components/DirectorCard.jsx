@@ -7,44 +7,43 @@ import {
   Typography,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import "./CardStyles.css"; // ✅ importa tu CSS
 
 export default function DirectorCard({ director, isLoggedIn, onDelete }) {
   const navigate = useNavigate();
 
   return (
-    <Card sx={{ maxWidth: 345, backgroundColor: "#1c1c1c", color: "#fff" }}>
+    <Card className="card-container">
       {director.picture && (
         <CardMedia
           component="img"
           className="card-media"
           image={director.picture}   // ✅ usar directamente el campo del backend
           alt={director.nombre}
-          sx={{ height: 200, objectFit: "cover" }}
         />
       )}
 
-      <CardContent>
-        <Typography variant="h5" sx={{ color: "#e50914", fontWeight: "bold" }}>
+      <CardContent className="card-content">
+        <Typography variant="h5" className="card-title">
           {director.nombre}
         </Typography>
 
         {director.nacionalidad && (
-          <Typography variant="body2" color="text.secondary">
+          <Typography variant="body2" className="card-subtitle">
             Nacionalidad: {director.nacionalidad}
           </Typography>
         )}
 
         {director.fecha_nacimiento && (
-          <Typography variant="body2" color="text.secondary">
+          <Typography variant="body2" className="card-subtitle">
             Nacimiento: {director.fecha_nacimiento}
           </Typography>
         )}
       </CardContent>
 
-      <CardActions>
+      <CardActions className="card-actions">
         <Button
-          variant="contained"
-          color="primary"
+          className="btn-primary"
           onClick={() => navigate(`/directores/${director.id}`)}
         >
           Ver detalles
@@ -53,15 +52,13 @@ export default function DirectorCard({ director, isLoggedIn, onDelete }) {
         {isLoggedIn && (
           <>
             <Button
-              variant="outlined"
-              color="warning"
+              className="btn-warning"
               onClick={() => navigate(`/edit-director/${director.id}`)}
             >
               Editar
             </Button>
             <Button
-              variant="outlined"
-              color="error"
+              className="btn-danger"
               onClick={() => onDelete(director)}
             >
               Eliminar

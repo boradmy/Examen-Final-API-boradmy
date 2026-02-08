@@ -1,36 +1,111 @@
 /* Contenedor general del card */
 .card-container {
   display: flex;
-  flex-direction: column;
+  flex-direction: column;   /* ✅ vertical */
   align-items: center;
-  justify-content: flex-start;
   text-align: center;
-  padding: 12px;
+  padding: 16px;
+  background-color: #1c1c1c !important; /* gris oscuro estilo Netflix */
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.6);
+  color: #fff !important;               /* texto blanco */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  width: 220px;              /* ancho fijo estilo póster */
+  margin: 0 auto;            /* centrado */
+}
+
+.card-container:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.8);
 }
 
 /* Imagen dentro del card */
 .card-media {
-  object-fit: cover;     /* recorta y centra la imagen */
-  width: 100%;           /* ocupa todo el ancho disponible */
-  max-height: 200px;     /* altura máxima uniforme */
-  border-radius: 8px;    /* esquinas redondeadas */
-  margin-bottom: 10px;   /* espacio debajo de la imagen */
+  object-fit: cover;
+  width: 100%;
+  height: 330px;             /* ✅ altura estilo póster */
+  border-radius: 8px;
+  margin-bottom: 12px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.card-media:hover {
+  transform: scale(1.05);
 }
 
 /* Contenido del card */
 .card-content {
   width: 100%;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  color: #fff !important; /* asegura texto blanco */
+}
+
+/* Títulos dentro del card */
+.card-title {
+  color: #e50914 !important; /* rojo Netflix */
+  margin-bottom: 6px;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.card-subtitle {
+  color: #bbb !important; /* gris claro para subtítulos */
+  margin: 0;
 }
 
 /* Acciones (botones) */
 .card-actions {
   display: flex;
   justify-content: center;
-  gap: 8px;
+  gap: 10px;
+  margin-top: 12px;
 }
 
-/* Efecto hover para darle dinamismo */
-.card-media:hover {
-  transform: scale(1.05);
-  transition: transform 0.3s ease-in-out;
+/* Botón principal (Ver detalles) */
+.btn-primary {
+  background-color: #e50914 !important; /* rojo Netflix */
+  color: #fff !important;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #f6121d !important;
+}
+
+/* Botón Editar */
+.btn-warning {
+  background-color: #f5c518 !important; /* amarillo estilo IMDb */
+  color: #000 !important;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.btn-warning:hover {
+  background-color: #e0b000 !important;
+}
+
+/* Botón Eliminar */
+.btn-danger {
+  background-color: #444 !important; /* gris oscuro */
+  color: #fff !important;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.btn-danger:hover {
+  background-color: #e50914 !important; /* rojo fuerte al hover */
 }

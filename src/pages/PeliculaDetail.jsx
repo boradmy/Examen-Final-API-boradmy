@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 
 import { getPeliculaById } from "../services/peliculaServices";
+import { getDirectorById } from "../services/directorServices"; // 👈 importar
 import Loading from "../components/Loading";
 
 import "./PeliculaDetail.css";
@@ -20,6 +21,7 @@ export default function PeliculaDetail() {
   const navigate = useNavigate();
 
   const [pelicula, setPelicula] = useState(null);
+  const [directorNombre, setDirectorNombre] = useState(""); // 👈 nuevo estado
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -27,6 +29,12 @@ export default function PeliculaDetail() {
       try {
         const data = await getPeliculaById(id);
         setPelicula(data || null);
+
+        // 👇 si la película tiene director, pedimos su nombre
+        if (data && data.director) {
+          const directorData = await getDirectorById(data.director);
+          setDirectorNombre(directorData.nombre);
+        }
       } catch (error) {
         console.error("Error cargando la película:", error);
         alert("Error cargando la película");
@@ -38,7 +46,6 @@ export default function PeliculaDetail() {
     fetchPelicula();
   }, [id]);
 
-  // 🔹 LOADING GLOBAL
   if (loading) {
     return <Loading text="Cargando película..." />;
   }
@@ -52,60 +59,58 @@ export default function PeliculaDetail() {
   }
 
   return (
-    <Card className="detail-card" sx={{ backgroundColor: "#1c1c1c", color: "#fff" }}>
+    <Card className="detail-card">
       <CardContent>
-        {/* Título */}
-        <Typography variant="h4" gutterBottom sx={{ color: "#e50914", fontWeight: "bold" }}>
+        <Typography variant="h4" className="detail-title">
           {pelicula.titulo}
         </Typography>
 
-        <Divider sx={{ my: 2, borderColor: "#e50914" }} />
+        <Divider className="detail-divider" />
 
         <Grid container spacing={3}>
-          {/* Imagen */}
           <Grid item xs={12} md={4}>
             <Box className="detail-left">
               {pelicula.picture && (
                 <img
-                  src={pelicula.picture}   // ✅ usar directamente el campo del backend
+                  src={pelicula.picture}
                   alt={pelicula.titulo}
                   className="detail-image-rect"
-                  style={{ width: "100%", borderRadius: "8px" }}
                 />
               )}
             </Box>
           </Grid>
 
-          {/* Información */}
           <Grid item xs={12} md={8}>
             <Box className="detail-info">
               {pelicula.genero && (
-                <Typography variant="body1">
+                <Typography>
                   <strong>Género:</strong> {pelicula.genero}
                 </Typography>
               )}
-
               {pelicula.anio && (
-                <Typography variant="body1">
+                <Typography>
                   <strong>Año:</strong> {pelicula.anio}
                 </Typography>
               )}
-
-              {pelicula.director && (
-                <Typography variant="body1">
-                  <strong>Director:</strong> {pelicula.director.nombre}
+              {directorNombre && (
+                <Typography>
+                  <strong>Director:</strong> {directorNombre}
                 </Typography>
               )}
             </Box>
           </Grid>
         </Grid>
 
-        {/* Botón volver */}
-        <div className="detail-actions" style={{ marginTop: "20px" }}>
+        <div className="detail-actions">
           <Button
-            variant="contained"
-            color="secondary"
-            onClick={() => navigate(-1)}
+            className="btn-primary"
+            onClick={() => {
+              if (window.history.length > 2) {
+                navigate(-1);
+              } else {
+                navigate("/peliculas");
+              }
+            }}
           >
             Volver
           </Button>

@@ -39,7 +39,6 @@ export default function PeliculaForm() {
   useEffect(() => {
     async function loadData() {
       try {
-        // cargar directores para el select
         const directorData = await getDirectores();
         setDirectores(Array.isArray(directorData) ? directorData : directorData.results || []);
 
@@ -50,7 +49,7 @@ export default function PeliculaForm() {
             genero: data.genero || "",
             anio: data.anio || "",
             picture: null, // el archivo solo se envía si se cambia
-            director: data.director ? data.director.id : "",
+            director: data.director ? data.director : "", // 👈 importante: usar el ID directo
           });
         }
       } catch (error) {
@@ -79,18 +78,11 @@ export default function PeliculaForm() {
     setSaving(true);
 
     try {
-      const formData = new FormData();
-      Object.entries(peliculaData).forEach(([key, value]) => {
-        if (value !== null && value !== "") {
-          formData.append(key, value);
-        }
-      });
-
       if (id) {
-        await updatePelicula(id, formData);
+        await updatePelicula(id, peliculaData); // 👈 objeto plano
         alert("Película actualizada correctamente");
       } else {
-        await createPelicula(formData);
+        await createPelicula(peliculaData); // 👈 objeto plano
         alert("Película agregada correctamente");
       }
 
@@ -111,7 +103,12 @@ export default function PeliculaForm() {
   return (
     <Card className="form-card" sx={{ backgroundColor: "#1c1c1c", color: "#fff" }}>
       <CardContent>
-        <Typography variant="h5" gutterBottom align="center" sx={{ color: "#e50914", fontWeight: "bold" }}>
+        <Typography
+          variant="h5"
+          gutterBottom
+          align="center"
+          sx={{ color: "#e50914", fontWeight: "bold" }}
+        >
           {id ? "Editar Película" : "Agregar Película"}
         </Typography>
 

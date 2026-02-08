@@ -1,41 +1,76 @@
+/* Fondo global oscuro estilo Netflix */
+html, body {
+  background-color: #141414 !important;
+  color: #fff !important;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
+}
+
+/* Card oscuro */
 .detail-card {
-  max-width: 900px;
-  margin: 40px auto;
-  background-color: #141414;
-  color: #fff;
-  border-radius: 16px;
+  background-color: #1c1c1c !important;
+  color: #fff !important;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.6);
+  padding: 20px;
 }
 
-.director-name {
-  color: #e50914;
+/* Título rojo Netflix */
+.detail-title {
+  color: #e50914 !important;
   font-weight: bold;
-  text-align: center;
 }
 
-.divider {
-  margin: 20px 0;
-  background-color: #333;
+/* Divider rojo */
+.detail-divider {
+  margin: 16px 0;
+  border-color: #e50914 !important;
 }
 
+/* Imagen ajustada con tamaño exacto y margen superior */
 .director-left {
   display: flex;
   justify-content: center;
+  align-items: center;
+  margin-top: 20px; /* ✅ baja la foto un poco */
 }
 
 .director-image-large {
-  width: 220px;
-  height: 300px;
+  width: 250px;
+  height: 350px;
+  border-radius: 8px;
   object-fit: cover;
-  border-radius: 12px;
-  border: 2px solid #e50914;
+  display: block;
+  margin: 0 auto;
 }
 
-.director-info p {
-  margin-bottom: 10px;
+/* Información del director con margen superior */
+.director-info {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #bbb !important;
+  margin-top: 20px; /* ✅ baja las palabras un poco */
 }
 
+/* Botón centrado */
 .detail-actions {
-  margin-top: 30px;
+  margin-top: 30px; /* más espacio antes del botón */
   display: flex;
   justify-content: center;
+}
+
+.btn-primary {
+  background-color: #e50914 !important;
+  color: #fff !important;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #f6121d !important;
 }

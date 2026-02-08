@@ -50,23 +50,22 @@ export default function DirectorDetail() {
   }
 
   return (
-    <Card className="detail-card" sx={{ backgroundColor: "#1c1c1c", color: "#fff" }}>
+    <Card className="detail-card">
       <CardContent>
-        <Typography variant="h4" sx={{ color: "#e50914", fontWeight: "bold" }}>
+        <Typography variant="h4" className="detail-title">
           {director.nombre}
         </Typography>
 
-        <Divider sx={{ my: 2, borderColor: "#e50914" }} />
+        <Divider className="detail-divider" />
 
         <Grid container spacing={3}>
           <Grid item xs={12} md={4}>
             <Box className="director-left">
               {director.picture && (
                 <img
-                  src={director.picture}   // ✅ usar directamente el campo del backend
+                  src={director.picture}
                   alt={director.nombre}
                   className="director-image-large"
-                  style={{ width: "100%", borderRadius: "8px" }}
                 />
               )}
             </Box>
@@ -88,11 +87,16 @@ export default function DirectorDetail() {
           </Grid>
         </Grid>
 
-        <div className="detail-actions" style={{ marginTop: "20px" }}>
+        <div className="detail-actions">
           <Button
-            variant="contained"
-            color="secondary"
-            onClick={() => navigate("/directores")}
+            className="btn-primary"
+            onClick={() => {
+              if (window.history.length > 2) {
+                navigate(-1);
+              } else {
+                navigate("/directores");
+              }
+            }}
           >
             Volver
           </Button>
