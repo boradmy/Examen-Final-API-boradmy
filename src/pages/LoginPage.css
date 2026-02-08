@@ -1,20 +1,46 @@
 .login-page {
   min-height: 100vh;
   display: flex;
-  justify-content: center;   /* ✅ centra horizontal */
-  align-items: center;       /* ✅ centra vertical */
-  background-color: #141414; /* ✅ fondo oscuro estilo Netflix */
+  justify-content: center;   /* centra horizontal */
+  align-items: flex-start;   /* alinea arriba */
+  background-color: #141414; /* fondo oscuro estilo Netflix */
+  padding-top: 60px;         /* 👈 controla cuánto sube el cuadro */
 }
 
 .login-box {
+  background-color: #1c1c1c; /* bloque gris oscuro */
+  color: #fff;
   width: 100%;
-  max-width: 380px;
+  max-width: 400px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+  padding: 30px;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  padding: 30px;
+}
+
+.login-title {
+  color: #e50914; /* rojo Netflix */
+  font-weight: bold;
+  text-align: center;
+}
+
+.input-label {
+  color: #fff !important;
+}
+
+.input-field {
+  color: #fff !important;
 }
 
 .login-button {
   margin-top: 10px;
+  font-weight: bold;
+  background-color: #e50914 !important; /* rojo Netflix */
+  color: #fff !important;
+}
+
+.login-button:hover {
+  background-color: #f6121d !important; /* rojo más brillante */
 }

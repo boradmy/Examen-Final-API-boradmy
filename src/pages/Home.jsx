@@ -49,9 +49,9 @@ export default function Home() {
 
       <div className="card-row">
         {movies.length ? (
-          <Grid container spacing={2} wrap="nowrap" className="scroll-row">
+          <Grid container spacing={2} wrap="wrap">
             {movies.map((movie) => (
-              <Grid item xs={12} sm={6} md={4} key={movie.id}>
+              <Grid item xs={12} sm={6} md={4} lg={3} key={movie.id}>
                 <PeliculaCard
                   movie={movie}
                   isLoggedIn={isLoggedIn}
@@ -80,9 +80,9 @@ export default function Home() {
 
       <div className="card-row">
         {directores.length ? (
-          <Grid container spacing={2} wrap="nowrap" className="scroll-row">
+          <Grid container spacing={2} wrap="wrap">
             {directores.map((director) => (
-              <Grid item xs={12} sm={6} md={4} key={director.id}>
+              <Grid item xs={12} sm={6} md={4} lg={3} key={director.id}>
                 <DirectorCard
                   director={director}
                   isLoggedIn={isLoggedIn}

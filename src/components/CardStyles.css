@@ -54,7 +54,7 @@
   margin: 0;
 }
 
-/* Acciones (botones) */
+/* Acciones (botones e íconos) */
 .card-actions {
   display: flex;
   justify-content: center;
@@ -78,34 +78,25 @@
   background-color: #f6121d !important;
 }
 
-/* Botón Editar */
-.btn-warning {
-  background-color: #f5c518 !important; /* amarillo estilo IMDb */
-  color: #000 !important;
-  border: none;
-  padding: 8px 14px;
+/* Íconos de acción (Editar y Eliminar) */
+.card-actions .MuiIconButton-root {
+  background-color: #333; /* fondo oscuro para íconos */
+  color: #fff;
   border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.btn-warning:hover {
-  background-color: #e0b000 !important;
+.card-actions .MuiIconButton-root:hover {
+  background-color: #555;
+  transform: scale(1.1); /* ligero zoom al hover */
 }
 
-/* Botón Eliminar */
-.btn-danger {
-  background-color: #444 !important; /* gris oscuro */
-  color: #fff !important;
-  border: none;
-  padding: 8px 14px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
+/* Ícono de editar */
+.card-actions .MuiIconButton-root svg {
+  color: #f5c518; /* amarillo estilo IMDb */
 }
 
-.btn-danger:hover {
-  background-color: #e50914 !important; /* rojo fuerte al hover */
+/* Ícono de eliminar */
+.card-actions .MuiIconButton-root[aria-label="eliminar"] svg {
+  color: #e50914; /* rojo Netflix */
 }

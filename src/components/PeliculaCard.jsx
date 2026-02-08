@@ -1,6 +1,8 @@
-import { Card, CardMedia, CardContent, CardActions, Typography, Button } from "@mui/material";
+import { Card, CardMedia, CardContent, CardActions, Typography, Button, IconButton } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import "./CardStyles.css"; // ✅ importa tu CSS
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import "./CardStyles.css";
 
 export default function PeliculaCard({ movie, isLoggedIn, onDelete }) {
   const navigate = useNavigate();
@@ -11,7 +13,7 @@ export default function PeliculaCard({ movie, isLoggedIn, onDelete }) {
         <CardMedia
           component="img"
           className="card-media"
-          image={movie.picture}   // ✅ usar directamente el campo del backend
+          image={movie.picture}
           alt={movie.titulo}
         />
       )}
@@ -44,18 +46,20 @@ export default function PeliculaCard({ movie, isLoggedIn, onDelete }) {
 
         {isLoggedIn && (
           <>
-            <Button
-              className="btn-warning"
+            <IconButton
+              aria-label="editar"
+              color="warning"
               onClick={() => navigate(`/edit-pelicula/${movie.id}`)}
             >
-              Editar
-            </Button>
-            <Button
-              className="btn-danger"
+              <EditIcon />
+            </IconButton>
+            <IconButton
+              aria-label="eliminar"
+              color="error"
               onClick={() => onDelete(movie)}
             >
-              Eliminar
-            </Button>
+              <DeleteIcon />
+            </IconButton>
           </>
         )}
       </CardActions>

@@ -4,8 +4,6 @@ import {
   TextField,
   Button,
   CircularProgress,
-  Card,
-  CardContent,
 } from "@mui/material";
 import { login } from "../services/authServices";
 import { useState } from "react";
@@ -35,7 +33,6 @@ export default function LoginPage() {
 
     try {
       const responseData = await login(loginData.username, loginData.password);
-
       localStorage.setItem("access_token", responseData.access_token);
       alert("Bienvenido a CatFlix 🎬");
       navigate("/");
@@ -49,62 +46,52 @@ export default function LoginPage() {
 
   return (
     <div className="login-page">
-      <Card className="form-card" sx={{ backgroundColor: "#1c1c1c", color: "#fff" }}>
-        <CardContent>
-          <Box component="form" onSubmit={handleSubmit} className="login-box">
-            <Typography
-              variant="h5"
-              gutterBottom
-              sx={{ color: "#e50914", fontWeight: "bold" }}
-            >
-              Iniciar sesión en CatFlix
-            </Typography>
+      <Box component="form" onSubmit={handleSubmit} className="login-box">
+        <Typography variant="h5" gutterBottom className="login-title">
+          Iniciar sesión en CatFlix
+        </Typography>
 
-            <TextField
-              label="Usuario"
-              name="username"
-              value={loginData.username}
-              onChange={handleChange}
-              required
-              disabled={loading}
-              fullWidth
-              margin="normal"
-              InputLabelProps={{ style: { color: "#fff" } }}
-              InputProps={{ style: { color: "#fff" } }}
-            />
+        <TextField
+          label="Usuario"
+          name="username"
+          value={loginData.username}
+          onChange={handleChange}
+          required
+          disabled={loading}
+          fullWidth
+          margin="normal"
+          InputLabelProps={{ className: "input-label" }}
+          InputProps={{ className: "input-field" }}
+        />
 
-            <TextField
-              label="Contraseña"
-              name="password"
-              type="password"
-              value={loginData.password}
-              onChange={handleChange}
-              required
-              disabled={loading}
-              fullWidth
-              margin="normal"
-              InputLabelProps={{ style: { color: "#fff" } }}
-              InputProps={{ style: { color: "#fff" } }}
-            />
+        <TextField
+          label="Contraseña"
+          name="password"
+          type="password"
+          value={loginData.password}
+          onChange={handleChange}
+          required
+          disabled={loading}
+          fullWidth
+          margin="normal"
+          InputLabelProps={{ className: "input-label" }}
+          InputProps={{ className: "input-field" }}
+        />
 
-            <Button
-              type="submit"
-              variant="contained"
-              color="error"
-              disabled={loading}
-              className="login-button"
-              fullWidth
-              sx={{ mt: 2 }}
-            >
-              {loading ? (
-                <CircularProgress size={24} color="inherit" />
-              ) : (
-                "Ingresar"
-              )}
-            </Button>
-          </Box>
-        </CardContent>
-      </Card>
+        <Button
+          type="submit"
+          variant="contained"
+          disabled={loading}
+          className="login-button"
+          fullWidth
+        >
+          {loading ? (
+            <CircularProgress size={24} color="inherit" />
+          ) : (
+            "Ingresar"
+          )}
+        </Button>
+      </Box>
     </div>
   );
 }

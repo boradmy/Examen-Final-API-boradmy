@@ -1,13 +1,8 @@
-import {
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  CardMedia,
-  Typography,
-} from "@mui/material";
+import { Card, CardActions, CardContent, CardMedia, Typography, Button, IconButton } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import "./CardStyles.css"; // ✅ importa tu CSS
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import "./CardStyles.css";
 
 export default function DirectorCard({ director, isLoggedIn, onDelete }) {
   const navigate = useNavigate();
@@ -18,7 +13,7 @@ export default function DirectorCard({ director, isLoggedIn, onDelete }) {
         <CardMedia
           component="img"
           className="card-media"
-          image={director.picture}   // ✅ usar directamente el campo del backend
+          image={director.picture}
           alt={director.nombre}
         />
       )}
@@ -51,18 +46,20 @@ export default function DirectorCard({ director, isLoggedIn, onDelete }) {
 
         {isLoggedIn && (
           <>
-            <Button
-              className="btn-warning"
+            <IconButton
+              aria-label="editar"
+              color="warning"
               onClick={() => navigate(`/edit-director/${director.id}`)}
             >
-              Editar
-            </Button>
-            <Button
-              className="btn-danger"
+              <EditIcon />
+            </IconButton>
+            <IconButton
+              aria-label="eliminar"
+              color="error"
               onClick={() => onDelete(director)}
             >
-              Eliminar
-            </Button>
+              <DeleteIcon />
+            </IconButton>
           </>
         )}
       </CardActions>
