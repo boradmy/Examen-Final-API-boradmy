@@ -34,3 +34,12 @@ html, body {
   color: #aaa;
   font-style: italic;
 }
+
+/* Línea divisoria elegante */
+.section-divider {
+  border: none;
+  height: 2px;
+  background: linear-gradient(to right, #e50914, #141414, #e50914);
+  margin: 2rem 0;
+  opacity: 0.8;
+}

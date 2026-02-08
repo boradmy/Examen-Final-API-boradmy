@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Grid, Typography, Divider } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 
 import PeliculaCard from "../components/PeliculaCard";
 import DirectorCard from "../components/DirectorCard";
@@ -71,7 +71,8 @@ export default function Home() {
         )}
       </div>
 
-      <Divider sx={{ my: 4 }} />
+      {/* Línea divisoria elegante */}
+      <hr className="section-divider" />
 
       {/* Sección Directores */}
       <Typography variant="h4" className="section-title" gutterBottom>

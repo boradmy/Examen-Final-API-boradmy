@@ -15,6 +15,11 @@
 .toolbar-nav {
   background-color: #141414;
   padding: 0.5rem 0;
+  border-bottom: 3px solid transparent; /* base */
+  background-image: linear-gradient(to right, #e50914, #141414, #e50914);
+  background-repeat: no-repeat;
+  background-position: bottom;
+  background-size: 100% 3px; /* grosor de la línea */
 }
 
 .nav-container {
