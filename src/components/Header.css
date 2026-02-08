@@ -46,8 +46,8 @@
 }
 
 .nav-btn.active {
-  color: #e50914;
-  border-bottom: 2px solid #e50914;
+  color: #ffffff;
+  border-bottom: 2px solid #820007;
 }
 
 .add-btn {
@@ -60,18 +60,18 @@
 }
 
 .add-btn:hover {
-  background-color: #f6121d;
+  background-color: #ffffff;
 }
 
 .auth-buttons {
   display: flex;
   align-items: center;
-  margin-left: auto; /* 🔥 empuja el bloque a la derecha del logo */
+  margin-left: auto; 
   padding-right: 1rem;
 }
 
 .login-btn {
-  color: #fff;
+  color: #ffffff;
   background-color: #e50914;
   padding: 6px 14px;
   border-radius: 4px;
@@ -95,5 +95,5 @@
 
 .logout-btn:hover {
   background-color: #e50914;
-  color: #fff;
+  color: #a10000;
 }
